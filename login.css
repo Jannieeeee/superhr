@@ -1,0 +1,25 @@
+body{
+    background-color: #edeef5;
+    font-family: "Poppins", sans-serif;
+}
+.container{
+    font-family:"Poppins",sans-serif;
+    display: flex;
+}
+.container h2{
+    display: flex;
+}
+.container input {
+    padding: 10px 10px;
+}
+.container select{
+    border-radius: 6px;
+   
+}
+.container button{
+    background-color: #ffff;
+    
+}
+.logo img {
+    width: 250px;
+  }
