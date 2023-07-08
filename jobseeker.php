@@ -211,64 +211,63 @@
 
     <!--step4 file-->
     <div class="step">
-      <div class="file-upload">
-        <div class="row row align-items-center pt-4 pb-3">
-          <div class="col-auto col-md-3 ps-5">
-            <label for="file-resume"> Resume</label>
-          </div>
-          <div class="col-auto col-md-8 pe-5">
-            <input id="file-resume" name="file-resume" type="file" />
-          </div>
-        </div>
+              <div class="file-upload">
+                <div class="row row align-items-center  justify-content-between">
+                  <div class="col-auto col-md-4">
+                      <label for="file-input mb-3"> Resume</label>
+                    </div>
+                    <div class="col-auto col-md-6">
+                      <input id="file-input" type="file"/>
+                    </div>
+              </div>
 
-        <div class="row row align-items-center pt-4 pb-3">
-          <div class="col-auto col-md-3 ps-5">
-            <label for="file-certi"> Certificate(optional) </label>
-          </div>
-          <div class="col-auto col-md-8 pe-5">
-            <input id="file-certi" name="file-certi" type="file" />
-          </div>
-        </div>
+              <div class="row row align-items-center  justify-content-between">
+                <div class="col-auto col-md-4">
+                    <label for="file-input mb-3">Cartificate(optional)</label>
+                  </div>
+                  <div class="col-auto col-md-6">
+                    <input id="file-input" type="file"/>
+                  </div>
+            </div>
 
-        <div class="row row align-items-center pt-4 pb-3">
-          <div class="col-auto col-md-3 ps-5">
-            <label for="file-hr"> House registration </label>
+            <div class="row row align-items-center  justify-content-between">
+              <div class="col-auto col-md-4">
+                  <label for="file-input mb-3"> House registration </label>
+                </div>
+                <div class="col-auto col-md-6">
+                  <input id="file-input" type="file"/>
+                </div>
           </div>
-          <div class="col-auto col-md-8 pe-5">
-            <input id="file-hr" name="file-hr" type="file" />
-          </div>
-        </div>
 
-        <div class="row row align-items-center pt-4 pb-3">
-          <div class="col-auto col-md-3 ps-5">
-            <label for="file-idcard"> ID card </label>
+          <div class="row row align-items-center  justify-content-between">
+            <div class="col-auto col-md-4">
+                <label for="file-input mb-3"> ID card</label>
+              </div>
+              <div class="col-auto col-md-6">
+                <input id="file-input" type="file"/>
+              </div>
           </div>
-          <div class="col-auto col-md-8 pe-5">
-            <input id="file-idcard" name="file-idcard" type="file" />
-          </div>
-        </div>
 
-        <div class="row row align-items-center pt-4 pb-3">
-          <div class="col-auto col-md-3 ps-5">
-            <label for="file-photo"> Photo </label>
-          </div>
-          <div class="col-auto col-md-8 pe-5">
-            <input id="file-photo" name="file-photo" type="file" />
+          <div class="row row align-items-center  justify-content-between">
+            <div class="col-auto col-md-4">
+                <label for="file-input mb-3"> Photo</label>
+              </div>
+              <div class="col-auto col-md-6">
+                <input id="file-input" type="file"/>
+              </div>
           </div>
         </div>
       </div>
-    </div>
-
     <!-- start previous / next buttons -->
     <div class="form-footer d-flex justify-content-end ">
-      <button type="cancel" id="prevBtn" onclick="nextPrev(0)">Cancel</button>
-      <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+      <a href="account.php" role="button" class="btn btn-outline-primary" id="prevBtn">Cancel</a>
+      <a onclick="nextPrev(1)" role="button" class="btn btn-outline-primary" style="background-color: #444DDA; color: #ffffff;" id="nextBtn">Cancel</a>
     </div>
     <!-- end previous / next buttons -->
   </form>
 
   <script>
-        function CreateJobSeeker() {
+    function CreateJobSeeker() {
       saveFilesToLocalStorage()
       console.log(9999)
       var signUpForm = document.getElementById("signUpForm");
@@ -288,7 +287,7 @@
         )
         .then(result => {
           console.log(result);
-          window.location.href = 'index.php';
+          window.location.href = 'redirect.php';
         })
         .catch(error => console.log('Error:', error));
     }
@@ -308,6 +307,7 @@
       saveFileToLocalStorage(idcardFileInput, 'idcardData');
       saveFileToLocalStorage(photoFileInput, 'photoData');
     }
+
     function saveFileToLocalStorage(fileInput, storageKey) {
       const file = fileInput.files[0];
       if (file) {
@@ -343,22 +343,68 @@
       fixStepIndicator(n)
     }
 
-    function nextPrev(n) {
-      // This function will figure out which tab to display
-      var x = document.getElementsByClassName("step");
-
-      // Exit the function if any field in the current tab is invalid:
-      if (n == 1 && !validateForm()) return false;
-      // Hide the current tab:
-      x[currentTab].style.display = "none";
-      // Increase or decrease the current tab by 1:
-      currentTab = currentTab + n;
-      // if you have reached the end of the form...
-      if (currentTab >= x.length) {
-        CreateJobSeeker()
+    function validateIDPassport() {
+      var idPassport = document.getElementsByName('id' && 'salary')[0].value;
+      var pattern = /^[0-9]+$/;
+      if (!pattern.test(idPassport)) {
+        alert('ID/Passport or Expexted Salary should contain only numeric digits.');
         return false;
       }
-      // Otherwise, display the correct tab:
+      return true;
+    }
+
+    function validatePhoneNumber() {
+      var phoneNum = document.getElementsByName('phone')[0].value;
+      var pattern = /^[0-9]+$/;
+      if (!pattern.test(phoneNum)) {
+        alert('Phone Number or Phone Number Contact Person should contain only numeric digits.');
+        return false;
+      }
+      return true;
+    }
+
+    function validateGPA() {
+      var GPA = document.getElementsByName('inputgpa')[0].value;
+      var pattern = /^[0-9]+$/;
+      if (!pattern.test(GPA)) {
+        alert('GPA should contain only numeric digits.');
+        return false;
+      }
+      return true;
+    }
+
+    function nextPrev(n) {
+      var x = document.getElementsByClassName("step");
+
+      if (currentTab == 0) {
+        var isIDPassportValid = validateIDPassport();
+        if (!isIDPassportValid) {
+          return;
+        }
+      } else if (currentTab == 1) {
+        var isPhoneNumberValid = validatePhoneNumber();
+        if (!isPhoneNumberValid) {
+          return;
+        }
+      } else if (currentTab == 2) {
+        var isGPAValid = validateGPA();
+        if (!isGPAValid) {
+          return;
+        }
+      }
+
+      if (n == 1 && !validateForm()) {
+        return false;
+      }
+
+      x[currentTab].style.display = "none";
+      currentTab = currentTab + n;
+
+      if (currentTab >= x.length) {
+        CreateIntern();
+        return false;
+      }
+
       showTab(currentTab);
     }
 
