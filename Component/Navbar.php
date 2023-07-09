@@ -10,7 +10,7 @@
                 </div>
                 <div class="col-md-3">
                     <a class="navbar-brand" href="#">
-                        <img src="C:\Users\malli\Documents\internship\doc\unnamed.png" alt="" height="40px" width="272.85711669921875px" class="d-inline-block align-text-top">
+                        <img src="../img/logo.png" alt="" height="40px" width="272.85711669921875px" class="d-inline-block align-text-top">
                     </a>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#"> <i class="fas fa-user-alt pe-2"></i>My Profile</a></li>
                         <li><a class="dropdown-item" href="#"> <i class="fas fa-cog pe-2"></i>Settings</a></li>
-                        <li><a class="dropdown-item" href="#"> <i class="fas fa-door-open pe-2"></i>Logout</a></li>
+                        <li><a class="dropdown-item" href="/"> <i class="fas fa-door-open pe-2"></i>Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link align-middle px-0">
+                            <a href="/CreateJobPosition/job.php" class="nav-link align-middle px-0">
                                 <span class="ms-1 d-none d-sm-inline">Create job</span>
                             </a>
                         </li>
