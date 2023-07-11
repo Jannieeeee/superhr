@@ -156,6 +156,6 @@ function saveData() {
 
     postData(url, data);
     console.log(data)
-    // window.location.href = "select.php";
+    window.location.href = "select.php";
 
 }

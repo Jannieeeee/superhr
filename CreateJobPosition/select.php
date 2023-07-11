@@ -27,7 +27,7 @@
                     <a href="form.php" class="btn btn-outline-primary" style="color: #444DDA; border:1px solid #444DDA;">Create another position</a>
                 </div>
                 <div class="col-md-2" >
-                    <a href="job.php" class="btn btn-primary" style="background-color: #444DDA; border:1px solid #444DDA;">Manage position</a>
+                    <a href="../JobManagement/job.php" class="btn btn-primary" style="background-color: #444DDA; border:1px solid #444DDA;">Manage position</a>
                 </div>
             </div>
         </div>

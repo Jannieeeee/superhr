@@ -4,7 +4,6 @@
     $username = "root";
     $password = "";
     $dbname = "superhr";
-    $sta = "new";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
