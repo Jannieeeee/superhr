@@ -11,9 +11,10 @@
 
 <body>
 
-  <header class="logo">
-    <img src="img/logo.png" alt="" height="40px" width="272.85711669921875px" class="d-inline-block align-text-top">
-  </header>
+<header class="logo">
+  <img src="assets/img/logo.png" alt="Logo description" height="40px" width="272.85711669921875px" class="d-inline-block align-text-top">
+</header>
+
 
   <div class="container">
     <div class="img"></div>

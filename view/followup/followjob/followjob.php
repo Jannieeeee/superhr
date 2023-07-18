@@ -31,47 +31,10 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-light bg-white">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <img src="C:\Users\malli\Documents\internship\doc\unnamed.png" alt="" height="40px" width="272.85711669921875px" class="d-inline-block align-text-top">
-      </a>
-
-      <div class="d-flex align-items-center">
-        <a href="#" class="text-decoration-none text-reset me-2"><span id="username"><?php echo $user_data['username']; ?> </span>
-          <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="40" />
-        </a>
-        <div class="dropdown">
-          <a class="text-reset me-2 dropdown hidden-arrow" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-bell bi-lg text-dark"></i>
-
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li>
-              <a class="dropdown-item" href="#">Some news</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Another news</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </li>
-          </ul>
-        </div>
-        <!-- Avatar -->
-        <div class="dropdown">
-          <a class="text-reset me-3 dropdown  d-flex align-items-center hidden-arrow" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-three-dots-vertical bi-lg text-dark"></i>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#"> <i class="fas fa-user-alt pe-2"></i>My Profile</a></li>
-            <li><a class="dropdown-item" href="#"> <i class="fas fa-cog pe-2"></i>Settings</a></li>
-            <li><a class="dropdown-item" href="#"> <i class="fas fa-door-open pe-2"></i>Logout</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </nav>
+<div>
+<?php
+    require_once '../../../Component/Navbar.php';
+    ?>
 
   <div class="container emp-profile">
     <div class="row mb-5">

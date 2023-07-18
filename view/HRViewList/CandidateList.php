@@ -4,135 +4,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="position.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+    <title>Candidate List</title>
 </head>
 
+<?php
+require_once '../../Component/Navbar.php';
+?>
 
-
-<body>
-
-    <div class="container-fluid">
-         <?php
-             require_once '../Component/Navbar.php';
-        ?>
-
-        <div class="row justify-content-between" style="background-color: #F2F3FF;">
-            <div class="col-md-4">
-                <div class="w-100">
-                    <div class="row w-100">
-                        <div class="col-md-6 offset-md-3">
-                            <div class="input-group mb-3">
-                                <button class="choiceBtn btn-outline-secondary" type="button" id="leftBtn">
-                                    <i class="bi bi-chevron-left"></i>
-                                </button>
-                                <select class="form-select " id="menuSelect" disabled>
-                                    <option value="thai">test</option>
-                                    <option value="uxui">UX/UI</option>
-                                    <option value="dev">DEV</option>
-                                    <option value="hr">HR</option>
-                                    <!-- Add more options here if needed -->
-                                </select>
-                                <button class="choiceBtn btn-outline-secondary" type="button" id="rightBtn">
-                                    <i class="bi bi-chevron-right"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="candidates">
-                    <!-- Candidates will be loaded here -->
-                </div>
+<body class="">
+    <div class="row px-4 ">
+        <div class="col-3">
+            <div class="">
+                <label for="" class="form-label" style="color:#444DDA">Candidate Name</label>
+                <input type="text" class="form-control" name="" id="searchName" aria-describedby="Search Candidate name" placeholder="Search Candidate name" style="border: 2px solid #444DDA;">
             </div>
-            <script>
-                $(document).ready(function() {
-                    // Fetch the initial data
-                    fetchCandidates("thai");
+        </div>
+        <div class="col-3">
+            <div class="">
+                <label for="" class="form-label" style="color:#444DDA">Position Name</label>
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle w-100" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border: 2px solid #444DDA;color: #444DDA;">
+                        Search Position
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="triggerId">
+                        <label class="dropdown-item w-100">
+                            <input type="checkbox" value="1"> UXUI
+                        </label>
+                        <label class="dropdown-item w-100">
+                            <input type="checkbox" value="2"> Fullstack
+                        </label>
+                        <label class="dropdown-item w-100">
+                            <input type="checkbox" value="3"> Frontend
+                        </label>
+                    </div>
+                </div>
 
-                    // When a button is clicked
-                    $(".choiceBtn").click(function() {
-                        var $select = $("#menuSelect");
-                        var totalOptions = $select.find('option').length;
-                        var currentOption = $select.prop('selectedIndex');
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="">
+                <label for="" class="form-label" style="color:#444DDA">Status Name</label>
+                <input type="text" class="form-control" name="" id="searchStatus" aria-describedby="Search status" placeholder="Search status" style="border: 2px solid #444DDA;">
+            </div>
+        </div>
+        <div class="col-3" style="padding-top: 2rem;">
+            <button type="button" class="btn w-100" style="background-color: #444DDA;color: white;" onclick="search()">Search</button>
+        </div>
+    </div>
 
-                        // If the left button is clicked
-                        if (this.id === 'leftBtn') {
-                            // If the first option is selected, go to the last option
-                            if (currentOption === 0) {
-                                $select.prop('selectedIndex', totalOptions - 1);
-                            } else {
-                                $select.prop('selectedIndex', currentOption - 1);
-                            }
-                        }
-
-                        // If the right button is clicked
-                        if (this.id === 'rightBtn') {
-                            // If the last option is selected, go to the first option
-                            if (currentOption === totalOptions - 1) {
-                                $select.prop('selectedIndex', 0);
-                            } else {
-                                $select.prop('selectedIndex', currentOption + 1);
-                            }
-                        }
-
-                        fetchCandidates($select.val());
-                    });
-
-                    function fetchCandidates(pos) {
-                        $.ajax({
-                            url: 'fetchCandidates.php',
-                            type: 'POST',
-                            data: {
-                                pos1: pos,
-                                pos2: pos
-                            },
-                            success: function(data) {
-                                $('#candidates').html(data);
-                            },
-                            error: function() {
-                                console.log('There was an error.');
-                            }
-                        });
-                    }
-                });
-            </script>
-            <div class="col-md-7" id="content">
-                <div class="emp-profile">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="profile-img">
-                                <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" width="90px" height="90px" alt="" />
-                            </div>
+    <div class="row px-4 mt-4">
+        <div class="col-4 ">
+            <div id="candidates">
+            </div>
+        </div>
+        <div class="col-8 ">
+            <div class="shadow-lg p-4 rounded">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="profile-img">
+                            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" width="90px" height="90px" alt="" />
                         </div>
-                        <div class="col-md-6">
-                            <div class="profile-head">
-                                <h5 class="mb-4" id="cfullname">
-                                    Ploypichcha Anupatanun
-                                </h5>
-                                <h6 id="cpos">UX/UI</h6>
-                            </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                            <h5 class="mb-4" id="cfullname">
+                                Ploypichcha Anupatanun
+                            </h5>
+                            <h6 id="cpos">UX/UI</h6>
                         </div>
-                        <div class="col-sm-4">
-                            <div class="row mb-4">
-                                <div class="col-sm-4">
-                                    <a href="https://www.youtube.com/watch?v=WUrquTUH1bk" class="btn btn-outline-primary" style="color: #444DDA; border: 1px solid #444DDA;">Deline</a>
-                                </div>
-                                <div class="col-sm-5">
-                                    <a href="https://www.youtube.com/watch?v=WUrquTUH1bk" class="btn btn-primary" style="background-color: #444DDA; border: 1px solid #444DDA;">Shot-list</a>
-                                </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="row mb-4">
+                            <div class="col-sm-4">
+                                <a href="https://www.youtube.com/watch?v=WUrquTUH1bk" class="btn btn-outline-primary" style="color: #444DDA; border: 1px solid #444DDA;">Deline</a>
+                            </div>
+                            <div class="col-sm-5">
+                                <a href="https://www.youtube.com/watch?v=WUrquTUH1bk" class="btn btn-primary" style="background-color: #444DDA; border: 1px solid #444DDA;">Shot-list</a>
                             </div>
                         </div>
                     </div>
                 </div>
+
 
                 <div class="row ">
                     <div class="col-sm-3">
@@ -275,9 +232,6 @@
                                 <label class="form-label" for="textAreaExample">Note</label>
                                 <textarea class="form-control" id="textAreaExample" rows="4" style="background: #fff;"></textarea>
                             </div>
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <button class="btn btn-primary" type="submit" style="background-color: #444DDA;"><i class="bi bi-pencil-square"></i></button>
-                            </div>
 
                         </div><!--pane-->
                         <div class="tab-pane fade " id="pills-interview" role="tabpanel" aria-labelledby="pills-intreview-tab">
@@ -378,48 +332,14 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><!--pane-->
+                        </div>
 
-                    </div><!--tab-content-->
-                </div><!--tab-->
-            </div><!--md8-->
-            <script>
-                $(document).ready(function() {
-                    $(document).on("click", ".userlist", function() {
-                        var id = $(this).data("id");
-                        fetchFulldata(id);
-                    });
+                    </div>
+                </div>
+            </div>
 
-
-                    function fetchFulldata(id) {
-                        $.ajax({
-                            url: 'fetchFulldata.php',
-                            type: 'POST',
-                            data: {
-                                id: id // This should be 'id' not 'status'
-                            },
-                            success: function(data) {
-                                var userData = JSON.parse(data);
-                                document.getElementById("cfullname").innerHTML = userData.full_name_eng
-                                document.getElementById("cmail").innerHTML = userData.email
-                                document.getElementById("cads").innerHTML = userData.house_registration_address
-                                document.getElementById("cphone").innerHTML = userData.phone_number
-
-                            },
-                            error: function() {
-                                console.log('There was an error.');
-                            }
-                        });
-                    }
-
-                });
-            </script>
         </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    </div><!--container-->
-
-
+    </div>
 </body>
 
 </html>
