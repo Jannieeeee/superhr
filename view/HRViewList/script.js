@@ -1,16 +1,53 @@
 $(document).ready(function () {
     fetchCandidates();
+    addStatusChoice();
 });
+
+function addStatusChoice(){
+    var statusChoice = document.getElementById("searchStatus");
+    var statuss = [
+        {show:"New", value:"new"},
+        {show:"Pre-screen", value:"pre_screen"},
+        {show:"Short-list", value:"short_list"},
+        {show:"Test", value:"test"},
+        {show:"Scheduled interview", value:"scheduled_interview"},
+        {show:"Interview", value:"interviewed"},
+        {show:"Pass", value:"pass"},
+        {show:"Fall", value:"fail"},
+        {show:"Hire", value:"hire"},
+        {show:"Hold", value:"hold"},
+    ]
+
+    statuss.forEach(item => {
+        var label = document.createElement("label");
+        label.className = "dropdown-item w-100";
+
+        var checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.value = item.value;
+
+        var text = document.createTextNode(" " + item.show);
+
+        label.appendChild(checkbox);
+        label.appendChild(text);
+
+        statusChoice.appendChild(label);
+    });
+}
 
 function fetchCandidates() {
     let positions = [];
-    $(".dropdown-menu input[type=checkbox]:checked").each(function() {
+    $("#searchPos input[type=checkbox]:checked").each(function() {
         positions.push($(this).val());
+    });
+
+    let statuses = [];
+    $("#searchStatus input[type=checkbox]:checked").each(function() {
+        statuses.push($(this).val());
     });
 
     let fullNameTh = $('#searchName').val();
     let fullNameEn = $('#searchName').val();
-    let status = $('#searchStatus').val();
 
     $.ajax({
         url: '../../backend/HrviewList/fetchCandidates.php',
@@ -19,7 +56,7 @@ function fetchCandidates() {
             positions: positions,
             full_name_th: fullNameTh,
             full_name_en: fullNameEn,
-            status: status
+            status: statuses
         },
         success: function(data) {
             $('#candidates').html(data);
@@ -32,6 +69,7 @@ function fetchCandidates() {
 
 
 
+
 $(document).ready(function () {
     $(document).on("click", ".userlist", function () {
         var id = $(this).data("id");
@@ -39,26 +77,38 @@ $(document).ready(function () {
     });
 
 
-    function fetchFulldata(id) {
+    function fetchCandidates() {
+        let positions = [];
+        $(".dropdown-menu input[type=checkbox]:checked").each(function() {
+            positions.push($(this).val());
+        });
+    
+        let statuses = [];
+        $("#searchStatus input[type=checkbox]:checked").each(function() {
+            statuses.push($(this).val());
+        });
+    
+        let fullNameTh = $('#searchName').val();
+        let fullNameEn = $('#searchName').val();
+    
         $.ajax({
-            url: '../../backend/HrviewList/fetchFulldata.php',
+            url: '../../backend/HrviewList/fetchCandidates.php',
             type: 'POST',
             data: {
-                id: id // This should be 'id' not 'status'
+                positions: positions,
+                full_name_th: fullNameTh,
+                full_name_en: fullNameEn,
+                status: statuses
             },
-            success: function (data) {
-                var userData = JSON.parse(data);
-                document.getElementById("cfullname").innerHTML = userData.full_name_eng
-                document.getElementById("cmail").innerHTML = userData.email
-                document.getElementById("cads").innerHTML = userData.house_registration_address
-                document.getElementById("cphone").innerHTML = userData.phone_number
-
+            success: function(data) {
+                $('#candidates').html(data);
             },
-            error: function () {
+            error: function() {
                 console.log('There was an error.');
             }
         });
     }
+    
 
 });
 

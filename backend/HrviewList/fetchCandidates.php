@@ -11,9 +11,9 @@ if ($conn->connect_error) {
 }
 
 $positions = isset($_POST['positions']) ? $_POST['positions'] : [];
+$statuses = isset($_POST['status']) ? $_POST['status'] : [];
 $fullNameTh = $_POST['full_name_th'] ?? null;
 $fullNameEn = $_POST['full_name_en'] ?? null;
-$status = $_POST['status'] ?? null;
 
 $sql = "SELECT * FROM users 
     INNER JOIN positions ON users.id = positions.user_id 
@@ -31,25 +31,26 @@ if (!empty($positions)) {
     $debugParams = array_merge($debugParams, $positions, $positions);
 }
 
+if (!empty($statuses)) {
+    $placeholders = implode(',', array_fill(0, count($statuses), '?'));
+    $sql .= " AND candidate_followup.status IN ($placeholders)";
+    $params = array_merge($params, $statuses);
+    $types .= str_repeat('s', count($statuses));
+    $debugParams = array_merge($debugParams, $statuses);
+}
+
 if ($fullNameTh !== null) {
-    $sql .= " AND users.full_name_th LIKE ?";
+    $sql .= " AND (users.full_name_th LIKE ?";
     $params[] = '%' . $fullNameTh . '%';
     $types .= 's';
     $debugParams[] = '%' . $fullNameTh . '%';
 }
 
 if ($fullNameEn !== null) {
-    $sql .= " OR users.full_name_eng LIKE ?";
+    $sql .= " OR users.full_name_eng LIKE ? )";
     $params[] = '%' . $fullNameEn . '%';
     $types .= 's';
     $debugParams[] = '%' . $fullNameEn . '%';
-}
-
-if ($status !== null) {
-    $sql .= " AND candidate_followup.status LIKE ?";
-    $params[] = '%' . $status . '%';
-    $types .= 's';
-    $debugParams[] = '%' . $status . '%';
 }
 
 $debugSql = $sql;
@@ -90,3 +91,5 @@ if ($result->num_rows > 0) {
 } else {
     echo "0 results";
 }
+?>
+

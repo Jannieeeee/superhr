@@ -31,7 +31,7 @@ require_once '../../Component/Navbar.php';
                     <button class="btn dropdown-toggle w-100" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border: 2px solid #444DDA;color: #444DDA;">
                         Search Position
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="triggerId">
+                    <div id="searchPos" class="dropdown-menu" aria-labelledby="triggerId">
                         <label class="dropdown-item w-100">
                             <input type="checkbox" value="1"> UXUI
                         </label>
@@ -43,13 +43,19 @@ require_once '../../Component/Navbar.php';
                         </label>
                     </div>
                 </div>
-
             </div>
         </div>
         <div class="col-3">
-            <div class="">
+        <div class="">
                 <label for="" class="form-label" style="color:#444DDA">Status Name</label>
-                <input type="text" class="form-control" name="" id="searchStatus" aria-describedby="Search status" placeholder="Search status" style="border: 2px solid #444DDA;">
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle w-100" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border: 2px solid #444DDA;color: #444DDA;">
+                        Search Status
+                    </button>
+                    <div id="searchStatus" class="dropdown-menu" aria-labelledby="triggerId">
+
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-3" style="padding-top: 2rem;">
