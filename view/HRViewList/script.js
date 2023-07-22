@@ -1,5 +1,6 @@
 $(document).ready(function () {
     fetchCandidates();
+    FetchPositionList();
     addStatusChoice();
 });
 
@@ -114,4 +115,22 @@ $(document).ready(function () {
 
 function search() {
     fetchCandidates()
+}
+
+function FetchPositionList() {
+    $.ajax({
+        url: '../../backend/HrviewList/fetchPositionList.php',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            $('#searchPos').empty();
+            
+            $.each(data, function(key, position) {
+                $('#searchPos').append('<label class="dropdown-item w-100"><input type="checkbox" value="' + key + '">' + position + '</label>');
+            });
+        },
+        error: function() {
+            console.log('There was an error.');
+        }
+    });
 }

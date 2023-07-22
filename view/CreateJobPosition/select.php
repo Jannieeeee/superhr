@@ -15,7 +15,7 @@
 <body>
 <div>
         <?php
-        require_once '../Component/Navbar.php';
+        require_once '../../Component/Navbar.php';
         ?>
     </div>
 

@@ -16,8 +16,8 @@
     $postData = json_decode($_POST['data'], true);
 
     // Insert data into the CreatePosition table
-    $stmt = $conn->prepare("INSERT INTO CreatePosition (PositionName, WorkType, Location, Station, Enable, TestRequire, TestPeriod, TestQuestion) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssiiis", $postData['position']['PositionName'], $postData['position']['WorkType'], $postData['position']['Location'], $postData['position']['Station'], $postData['position']['Enable'], $postData['position']['TestRequire'], $postData['position']['TestPeriod'], $postData['position']['TestQuestion']);
+    $stmt = $conn->prepare("INSERT INTO CreatePosition (PositionName, WorkType, Location, Station, Enable, TestRequire, TestPeriod, TestQuestion, StartDate, EndDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssiiisss", $postData['position']['PositionName'], $postData['position']['WorkType'], $postData['position']['Location'], $postData['position']['Station'], $postData['position']['Enable'], $postData['position']['TestRequire'], $postData['position']['TestPeriod'], $postData['position']['TestQuestion'], $postData['position']['StartDate'], $postData['position']['EndDate']);
     $stmt->execute();
     $positionID = $stmt->insert_id; // Get the ID of the newly inserted row
 

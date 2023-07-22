@@ -1,76 +1,74 @@
 var inputField = document.getElementById("postestpr");
+var currentPage = 0;
+document.getElementById("step2").style.display = "none";
+document.getElementById("step3").style.display = "none";
+changeStepIndicator(currentPage);
 
 inputField.addEventListener("input", function () {
     var value = inputField.value;
     inputField.value = value.replace(/\D/g, "");
 });
 
-var currentTab = 0; // Current tab is set to be the first tab (0)
-showTab(currentTab); // Display the current tab
-
-function showTab(n) {
-    // This function will display the specified tab of the form...
-    var x = document.getElementsByClassName("step");
-    x[n].style.display = "block";
-    //... and fix the Previous/Next buttons:
-
-    if (n == (x.length - 1)) {
-        document.getElementById("nextBtn").classList.add("d-none")
-        document.getElementById("saveBtn").classList.remove("d-none")
-        document.getElementById("saveBtn").classList.add("d-block")
-        return;
-    } else {
-        document.getElementById("nextBtn").innerHTML = "Next";
-    }
-    fixStepIndicator(n)
-}
-
-function nextPrev(n) {
-    var x = document.getElementsByClassName("step");
-    if (n == 1 && !validateForm()) return false;
-    x[currentTab].style.display = "none";
-    currentTab = currentTab + n;
-    if (currentTab >= x.length) {
-        // document.getElementById("cratejob").submit();
-        document.getElementById("nextBtn").classList.add("d-none")
-        document.getElementById("saveBtn").classList.remove("d-none")
-        document.getElementById("saveBtn").classList.add("d-block")
-
-    } else {
-        showTab(currentTab);
-    }
-}
-
-function validateForm() {
-    var x, y, i, valid = true;
-    x = document.getElementsByClassName("step");
-    y = x[currentTab].getElementsByTagName("input");
-    for (i = 0; i < y.length; i++) {
-        if (y[i].value == "") {
-            y[i].className += " invalid";
-            valid = false;
+function changeStepIndicator(index) {
+    var stepIndicators = document.querySelectorAll('#cratejob .form-header .stepIndicator');
+    for (let i = 0; i < stepIndicators.length; i++) {
+        var indicator = stepIndicators[i];
+        indicator.classList.remove('active', 'finish');
+        if (i < index) {
+            indicator.classList.add('finish');
+        }
+        if (i === index) {
+            indicator.classList.add('active');
         }
     }
-    if (valid) {
-        document.getElementsByClassName("stepIndicator")[currentTab].className += " finish";
-    }
-    return valid;
 }
 
-function fixStepIndicator(n) {
-    // This function removes the "active" class of all steps...
-    var i, x = document.getElementsByClassName("stepIndicator");
-    for (i = 0; i < x.length; i++) {
-        x[i].className = x[i].className.replace(" active", "");
+function nextstep() {
+    var valid = true;
+    var inputs = document.querySelectorAll(`#step${currentPage+1} input`);
+    console.log(`step${currentPage+1} input`)
+    for (var i = 0; i < inputs.length; i++) {
+        var input = inputs[i];
+        if (input.value.trim() === '' || !input.checkValidity()) {
+            input.classList.add('is-invalid');
+            valid = false;
+        } else {
+            input.classList.remove('is-invalid');
+        }
     }
-    //... and adds the "active" class on the current step:
-    x[n].className += " active";
+
+    if (valid) {
+        changeStepIndicator(currentPage += 1);
+        if(currentPage == 3){
+            saveData();
+        }
+        if (currentPage == 1) {
+            document.getElementById("step1").style.display = "none";
+            document.getElementById("step2").style.display = "block";
+        } else if (currentPage == 2) {
+            document.getElementById("step2").style.display = "none";
+            document.getElementById("step3").style.display = "block";
+        }
+    }
 }
+
+function previousstep() {
+    changeStepIndicator(currentPage -= 1);
+    if (currentPage == 0) {
+        document.getElementById("step1").style.display = "block";
+        document.getElementById("step2").style.display = "none";
+    } else if (currentPage == 1) {
+        document.getElementById("step2").style.display = "block";
+        document.getElementById("step3").style.display = "none";
+    } else if (currentPage == 2) {
+        document.getElementById("step3").style.display = "block";
+    }
+}
+
 
 // add row
 var cId = 2;
 $("#addRow").click(function () {
-
     var html = '';
     html += '<div class="row align-items-center py-2">';
     html += '<div class= "col-md-8">';
@@ -109,18 +107,18 @@ function postData(url, data) {
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
 
 function saveData() {
-    var url = '../backend/CreatePosition/CreatePosition.php';
+    var url = '../../backend/CreatePosition/CreatePosition.php';
     var testAssessmentCriteria = Array.from(document.querySelectorAll("[id^='testCtr']")).map((input) => ({
         Criteria: input.value
     }));
@@ -134,10 +132,12 @@ function saveData() {
             WorkType: document.getElementById("postype").value,
             Location: document.getElementById("posloca").value,
             Station: document.getElementById("posstation").value,
-            Enable: document.getElementById("posenable").checked,
+            Enable: true,
             TestRequire: document.getElementById("postestreq").checked,
             TestPeriod: parseInt(document.getElementById("postestpr").value),
-            TestQuestion: document.getElementById("postestqt").value
+            TestQuestion: document.getElementById("postestqt").value,
+            StartDate: document.getElementById("posstartdate").value,
+            EndDate: document.getElementById("posenddate").value
         },
         nearTransport: [
             {

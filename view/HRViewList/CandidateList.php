@@ -35,12 +35,6 @@ require_once '../../Component/Navbar.php';
                         <label class="dropdown-item w-100">
                             <input type="checkbox" value="1"> UXUI
                         </label>
-                        <label class="dropdown-item w-100">
-                            <input type="checkbox" value="2"> Fullstack
-                        </label>
-                        <label class="dropdown-item w-100">
-                            <input type="checkbox" value="3"> Frontend
-                        </label>
                     </div>
                 </div>
             </div>
