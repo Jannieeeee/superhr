@@ -65,6 +65,11 @@ $stmt = $conn->prepare("INSERT INTO documents (user_id, resume_data, certi_data,
 $stmt->bind_param("isssss", $last_id, $_POST["resumeData"], $_POST["certiData"], $_POST["hrData"], $_POST["idcardData"], $_POST["photoData"]);
 $stmt->execute();
 
+// Insert data into Education
+$stmt = $conn->prepare("INSERT INTO education (user_id, education_level, university, faculty, major, year, gpa) VALUES (?,?,?,?,?,?,?)");
+$stmt->bind_param("issssii", $last_id, $_POST["elevel"], $_POST["inputuni"], $_POST["inputfuc"], $_POST["inputmaj"], $_POST["years"], $_POST["inputgpa"]);
+$stmt->execute();
+
 // Insert data into candidate_followup table
 $stmt = $conn->prepare("INSERT INTO candidate_followup (user_id, status, followup_date, notes) VALUES (?, ?, ?, ?)");
 $stmt->bind_param("isss", $last_id, $sta, $_POST["followupDate"], $_POST["notes"]);

@@ -27,17 +27,19 @@ function selectJob(posid) {
 
 
 function createC(data, t) {
+    let uniqueId = new Date().getTime();
     var n = 1;
+    var db = t == "c1" ? "Test" : "Interview"
     document.getElementById(t).innerHTML = "";
     for (const item of data) {
         document.getElementById(t).innerHTML +=
             `
       <div class="input-group mb-3">
-      <input type="text" class="form-control" placeholder="Criteria" aria-label="Criteria" value="${n}. ${item.Criteria}">
-      <button class="sv btn btn-outline-success d-none" type="button" onclick="saveData('5')" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
+      <input type="text" class="form-control" placeholder="Criteria" aria-label="Criteria" value="${item.Criteria}">
+      <button class="sv btn btn-outline-success d-none" type="button" onclick="saveInterview('${db}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
         <i class=" bi bi-check-circle"></i>
       </button>
-      <button class="sv btn btn-outline-danger d-none" type="button" onclick="saveData('5')" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
+      <button class="sv btn btn-outline-danger d-none" type="button" onclick="deleteInterview('${uniqueId}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
       <i class=" bi bi-trash"></i>
     </button>
     </div>
@@ -96,19 +98,19 @@ function toggleMode() {
 
 
     if (!fl) {
-      edittxt.innerHTML = "View";
-      vmode.classList.remove("d-none");
-      vmode.classList.add("d-block");
-      emode.classList.remove("d-block");
-      emode.classList.add("d-none");
+        edittxt.innerHTML = "View";
+        vmode.classList.remove("d-none");
+        vmode.classList.add("d-block");
+        emode.classList.remove("d-block");
+        emode.classList.add("d-none");
     } else {
-      edittxt.innerHTML = "Edit";
-      vmode.classList.remove("d-block");
-      vmode.classList.add("d-none");
-      emode.classList.remove("d-none");
-      emode.classList.add("d-block");
+        edittxt.innerHTML = "Edit";
+        vmode.classList.remove("d-block");
+        vmode.classList.add("d-none");
+        emode.classList.remove("d-none");
+        emode.classList.add("d-block");
     }
-  }
+}
 
 function saveData(id, column) {
     let value = document.getElementById(id).value;
@@ -132,3 +134,69 @@ function saveData(id, column) {
         .then(response => alert(response))
         .catch(error => console.error('Error:', error));
 }
+
+function addInterview() {
+    let uniqueId = new Date().getTime();
+
+    document.getElementById("c2").innerHTML +=
+    `
+    <div class="input-group mb-3" id="${uniqueId}">
+        <input type="text" class="form-control" placeholder="Criteria" aria-label="Criteria" value="">
+        <button class="sv btn btn-outline-success " type="button" onclick="saveInterview("Interview")" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
+        <i class=" bi bi-check-circle"></i>
+        </button>
+        <button class="sv btn btn-outline-danger " type="button" onclick="deleteInterview('${uniqueId}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+        <i class=" bi bi-trash"></i>
+        </button>
+    </div>
+    `
+}
+function addTest() {
+    let uniqueId = new Date().getTime();
+
+    document.getElementById("c1").innerHTML +=
+    `
+    <div class="input-group mb-3" id="${uniqueId}">
+        <input type="text" class="form-control" placeholder="Criteria" aria-label="Criteria" value="">
+        <button class="sv btn btn-outline-success " type="button" onclick="saveInterview("Test")" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
+        <i class=" bi bi-check-circle"></i>
+        </button>
+        <button class="sv btn btn-outline-danger " type="button" onclick="deleteTest('${uniqueId}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+        <i class=" bi bi-trash"></i>
+        </button>
+    </div>
+    `
+}
+function deleteInterview(uniqueId) {
+    let element = document.getElementById(uniqueId);
+    element.parentNode.removeChild(element);
+}
+function deleteTest(uniqueId) {
+    let element = document.getElementById(uniqueId);
+    element.parentNode.removeChild(element);
+}
+
+function saveInterview(db) {
+    let data = [];
+    var itemid = db=="Test"?"c1":"c2"
+    let elements = document.getElementById(itemid).children;
+    for (let i = 0; i < elements.length; i++) {
+        console.log(elements[i].children[0].value);
+        const element = elements[i];
+        data.push(element.children[0].value);
+    }
+
+
+    fetch('../../backend/CreatePosition/Update'+db+'Criteria.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            pid: pid,
+            data: data
+        })
+    })
+    
+}
+

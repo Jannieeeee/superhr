@@ -240,7 +240,7 @@
 
                 <div class="input-group">
                   <p class="text-muted mb-2">Test assessment criteria</p>
-                  <i class="sv d-none bi bi-plus-circle btn-outline-info rounded-circle mx-2"></i>
+                  <i class="sv d-none bi bi-plus-circle btn-outline-info rounded-circle mx-2 cs-p"  onclick="addTest()"></i>
                 </div>
 
                 <div id="c1" class="mb-4">
@@ -255,12 +255,13 @@
           <div class="col-md-6">
             <div class="input-group">
             <p class="text-muted mb-2">Interview assessment criteria</p>
-              <i class="sv d-none bi bi-plus-circle btn-outline-info rounded-circle mx-2"></i>
+              <i class="sv d-none bi bi-plus-circle btn-outline-info rounded-circle mx-2" onclick="addInterview()"></i>
             </div>
             <div id="c2" class="mb-4">
 
             </div>
           </div>
+          
         </div>
       </div>
 

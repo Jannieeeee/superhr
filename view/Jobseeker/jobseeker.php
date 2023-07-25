@@ -13,7 +13,7 @@
   <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
-        <img src="img/logo.png" alt="" height="40px" width="272.85711669921875px" class="d-inline-block align-text-top" onclick="window.location.href='index.php'">
+        <img src="img/logo.png" alt="" height="40px" width="272.85711669921875px" class="d-inline-block align-text-top" onclick="window.location.href='../../index.php'">
       </a>
     </div>
   </nav>
@@ -279,7 +279,7 @@
         formData.append(key, value);
       }
       // console.log(formData)
-      fetch('./backend/createAccount/createAccountJob.php', {
+      fetch('../../backend/createAccount/createAccountJob.php', {
           method: 'POST',
           body: formData
         })
@@ -288,7 +288,7 @@
         )
         .then(result => {
           console.log(result);
-          window.location.href = 'index.php';
+          window.location.href = '../../index.php';
         })
         .catch(error => console.log('Error:', error));
     }

@@ -62,16 +62,18 @@
               $user_data = $user;
 
               $_SESSION['user_data'] = $user_data;
+              $_SESSION['userid'] = $user_data['id'];
 
 
               echo '<script type="text/javascript">';
               echo 'window.localStorage.setItem("user_data", ' . json_encode($user_data) . ');';
+              echo 'window.localStorage.setItem("userid", ' . $user_data['id'] . ');';
 
 
               if ($user['role'] === 'Intern') {
-                echo 'window.location.href = "./followup/followupintern/followintern.php";';
+                echo 'window.location.href = "./view/followup/followupintern/followintern.php";';
               } else {
-                echo 'window.location.href = "./followup/followjob/followjob.php";';
+                echo 'window.location.href = "./view/followup/followjob/followjob.php";';
               }
               echo '</script>';
             } else {
@@ -80,6 +82,7 @@
           } else {
             $msg = "Username or Password is not correct.";
           }
+
 
           $conn->close();
         }
@@ -109,7 +112,7 @@
                                                                 ?> </p>
           <a href="#">Forgot Password?</a>
           <input type="submit" class="btn" value="Log In" name="login" />
-          <input type="submit" class="btn-signUp" value="Sign Up" onclick="window.location.href='account.php'" />
+          <input type="submit" class="btn-signUp" value="Sign Up" onclick="window.location.href='./view/Account/account.php'" />
 
         </form>
       </div>

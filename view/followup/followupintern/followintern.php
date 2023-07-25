@@ -28,71 +28,36 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-light bg-white">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <img src="C:\Users\malli\Documents\internship\doc\unnamed.png" alt="" height="40px" width="272.85711669921875px" class="d-inline-block align-text-top">
-      </a>
+<div>
+    <?php
+    require_once '../../../Component/Navbar.php';
+    ?>
+  </div>
 
-      <div class="d-flex align-items-center">
-        <a href="#" class="text-decoration-none text-reset me-2"><?php echo $user_data['username']; ?>
-          <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="40" />
-        </a>
-        <div class="dropdown">
-          <a class="text-reset me-2 dropdown hidden-arrow" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-bell bi-lg text-dark"></i>
-
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li>
-              <a class="dropdown-item" href="#">Some news</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Another news</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </li>
-          </ul>
-        </div>
-        <!-- Avatar -->
-        <div class="dropdown">
-          <a class="text-reset me-3 dropdown hidden-arrow" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-three-dots-vertical bi-lg text-dark"></i>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#"> <i class="fas fa-user-alt pe-2"></i>My Profile</a></li>
-            <li><a class="dropdown-item" href="#"> <i class="fas fa-cog pe-2"></i>Settings</a></li>
-            <li><a class="dropdown-item" href="#"> <i class="fas fa-door-open pe-2"></i>Logout</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <div class="container emp-profile">
-    <div class="row mb-5">
-      <div class="col-md-2">
+  <div class="row my-3 p-2">
+      <div class="col-3">
         <div class="profile-img">
           <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" alt="" />
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="profile-head">
+      <div class="col-6">
+        <div class="">
           <h4 class="mb-4">
           <?php echo $user_data['full_name_th']; ?>
           </h4>
-          <h6 class="mb-4"><img src="C:Users\malli\Documents\internship\doc\envelope (1).png" width="24" height="24" alt=""> bppjan@gmail.con</h6>
-          <h6 class="mb-4"><img src="C:\Users\malli\Documents\internship\doc\phone-call.png" width="24" height="24" alt=""> xxxxxxxxx</h6>
-          <h6 class="mb-4"><img src="C:\Users\malli\Documents\internship\doc\document-signed.png" alt="" width="24" height="24"><a href="#" class="text-decoration-none">document</a> </h6>
+          <div class="d-flex gap-2">
+            <div class="mb-4"><img src="C:Users\malli\Documents\internship\doc\envelope (1).png" width="24" height="24" alt=""><?php echo $user_data['email']; ?></div>
+            <div class="mb-4"><img src="C:\Users\malli\Documents\internship\doc\phone-call.png" width="24" height="24" alt=""> xxxxxxxxx</div>
+            <div class="mb-4"><img src="C:\Users\malli\Documents\internship\doc\document-signed.png" alt="" width="24" height="24"><a href="#" class="text-decoration-none">document</a> </div>
+          </div>
         </div>
       </div>
-      <div class="col-sm-3">
+      <div class="col-3">
         <div class="row mb-3">
-          <div class="col-sm-5">
+          <div class="col-8">
             <p class="text-muted mb-0">Process Status</p>
           </div>
-          <div class="col-sm-5">
+          <div class="col-4">
             <p class=" mb-0"><?php echo $user_data['status']; ?></p>
           </div>
         </div>

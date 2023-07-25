@@ -23,7 +23,7 @@
 
 
   <?php
-  require('dbconnect.php');
+  require('../../dbconnect.php');
   // Starting a session
   session_start();
 
@@ -42,9 +42,9 @@
 
       // Redirecting based on the role
       if ($tableName == "intern") {
-        header('Location: intern.php');
+        header('Location: ../Intern/intern.php');
       } elseif ($tableName == "jobseeker") {
-        header('Location: jobseeker.php');
+        header('Location: ../Jobseeker/jobseeker.php');
       }
     } else {
       $errorMsg = "Confirm password is not correct. Please try again.";
@@ -110,7 +110,7 @@
             </div>
           </div>
           <div class="d-flex justify-content-center">
-            <button type="button" onclick="window.location.href = 'index.php';" class="btn btn-outline-primary btn ms-2" value="cancel">Cancel</button>
+            <button type="button" onclick="window.location.href = '../../index.php';" class="btn btn-outline-primary btn ms-2" value="cancel">Cancel</button>
             <button type="submit" class="btn btn-primary btn ms-2 st" style="background-color: #444DDA;">Next</button>
           </div>
         </div>

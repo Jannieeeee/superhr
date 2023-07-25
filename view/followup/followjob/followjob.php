@@ -37,28 +37,31 @@
     ?>
 
   <div class="container emp-profile">
-    <div class="row mb-5">
-      <div class="col-md-2">
+
+    <div class="row mb-3 p-2">
+      <div class="col-3">
         <div class="profile-img">
           <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" alt="" />
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="profile-head">
+      <div class="col-6">
+        <div class="">
           <h4 class="mb-4">
           <?php echo $user_data['full_name_th']; ?>
           </h4>
-          <h6 class="mb-4"><img src="C:Users\malli\Documents\internship\doc\envelope (1).png" width="24" height="24" alt=""><?php echo $user_data['email']; ?></h6>
-          <h6 class="mb-4"><img src="C:\Users\malli\Documents\internship\doc\phone-call.png" width="24" height="24" alt=""> xxxxxxxxx</h6>
-          <h6 class="mb-4"><img src="C:\Users\malli\Documents\internship\doc\document-signed.png" alt="" width="24" height="24"><a href="#" class="text-decoration-none">document</a> </h6>
+          <div class="d-flex gap-2">
+            <div class="mb-4"><img src="C:Users\malli\Documents\internship\doc\envelope (1).png" width="24" height="24" alt=""><?php echo $user_data['email']; ?></div>
+            <div class="mb-4"><img src="C:\Users\malli\Documents\internship\doc\phone-call.png" width="24" height="24" alt=""> xxxxxxxxx</div>
+            <div class="mb-4"><img src="C:\Users\malli\Documents\internship\doc\document-signed.png" alt="" width="24" height="24"><a href="#" class="text-decoration-none">document</a> </div>
+          </div>
         </div>
       </div>
-      <div class="col-sm-3">
+      <div class="col-3">
         <div class="row mb-3">
-          <div class="col-sm-5">
+          <div class="col-8">
             <p class="text-muted mb-0">Process Status</p>
           </div>
-          <div class="col-sm-5">
+          <div class="col-4">
             <p class=" mb-0"><?php echo $user_data['status']; ?></p>
           </div>
         </div>
