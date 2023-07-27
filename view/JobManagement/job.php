@@ -92,7 +92,36 @@
         </div>
 
         <div id="toggleDiv2" style="display: none;">
+          <?php
+          include '../../backend/CreatePosition/FetchPostionList.php';
 
+          if ($result->num_rows > 0) {
+            echo '<div class="list-group w-100">';
+            while ($row = $result->fetch_assoc()) {
+              $status = $row['Enable'] ? 'Opening' : 'Closing';
+              if ($status == 'Opening') {
+                continue;
+              }
+              $bg = $row['Enable'] ? 'bg-success' : 'bg-danger';
+              echo '<a id="posid' . $row['PositionID'] . '" class="list-group-item list-group-item-action cs-p" onclick="selectJob(' . $row['PositionID'] . ')" >';
+              echo '<div class="card">';
+              echo '<div class="card-body">';
+              echo '<h5 class="card-title">' . $row['PositionName'] . '</h5>';
+              echo '<h6 class="card-subtitle mb-2 text-muted">loremd 1 person</h6>';
+              echo '</div>';
+              echo '<div class="card-footer text-end">';
+              echo '<i class="bi bi-arrow-right"></i>';
+              echo '</div>';
+              echo '</div>';
+
+
+              echo '</a>';
+            }
+            echo '</div>';
+          } else {
+            echo "No positions available";
+          }
+          ?>
 
         </div>
 
@@ -185,12 +214,17 @@
               <div class="row mb-3">
                 <div class="col-md-6">
                   <p class="text-muted mb-2">Status</p>
+
                   <div class="input-group mb-3">
-                    <input id="pstatus" class="form-control mb-0" type="text" disabled>
+                    <select id="pstatus" class="form-control mb-0"  disabled>
+                      <option value="Opening">Opening</option>
+                      <option value="Closing">Closing</option>
+                    </select>
                     <button class="sv btn btn-outline-success d-none" type="button" onclick="saveData('pstatus', 'Enable')" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
-                      <i class=" bi bi-check-circle"></i>
+                      <i class="bi bi-check-circle"></i>
                     </button>
                   </div>
+
 
                 </div>
                 <div class="col-md-6">
@@ -240,7 +274,7 @@
 
                 <div class="input-group">
                   <p class="text-muted mb-2">Test assessment criteria</p>
-                  <i class="sv d-none bi bi-plus-circle btn-outline-info rounded-circle mx-2 cs-p"  onclick="addTest()"></i>
+                  <i class="sv d-none bi bi-plus-circle btn-outline-info rounded-circle mx-2 cs-p" onclick="addTest()"></i>
                 </div>
 
                 <div id="c1" class="mb-4">
@@ -254,14 +288,14 @@
           <h6 class="mb-4">Interview information</h6>
           <div class="col-md-6">
             <div class="input-group">
-            <p class="text-muted mb-2">Interview assessment criteria</p>
+              <p class="text-muted mb-2">Interview assessment criteria</p>
               <i class="sv d-none bi bi-plus-circle btn-outline-info rounded-circle mx-2" onclick="addInterview()"></i>
             </div>
             <div id="c2" class="mb-4">
 
             </div>
           </div>
-          
+
         </div>
       </div>
 

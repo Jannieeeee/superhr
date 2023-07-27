@@ -119,7 +119,7 @@ function saveData(id, column) {
     let formData = new FormData();
     formData.append('id', id);
     if (id == "pstatus") {
-        value = value == "Openning" ? "1" : "0"
+        value = value == "Opening" ? "1" : "0"
     }
     formData.append('column', column);
     formData.append('value', value);
