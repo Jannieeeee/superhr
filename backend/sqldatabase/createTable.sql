@@ -80,9 +80,11 @@ CREATE TABLE salaries (
 CREATE TABLE candidate_followup (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT,
-  status ENUM('new', 'pre_screen', 'short_list', 'test', 'scheduled_interview', 'interviewed', 'pass', 'fail', 'hire', 'hold') DEFAULT 'new',
+  status ENUM('new', 'pre_screen', 'short_list', 'test', 'scheduled_interview', 'interviewed', 'pass', 'fail', 'hire', 'hold', 'cancel') DEFAULT 'new',
   followup_date TIMESTAMP,
+  typeapp ENUM('intern', 'jobseeker') null,
   notes VARCHAR(255),
+  cancel_reason VARCHAR(255) null,
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
@@ -94,8 +96,10 @@ CREATE TABLE CreatePosition (
     Station VARCHAR(255) NOT NULL,
     Enable BOOLEAN NOT NULL,
     TestRequire BOOLEAN NOT NULL,
-    TestPeriod INT NOT NULL,
-    TestQuestion VARCHAR(255) NOT NULL
+    TestPeriod INT NULL,
+    TestQuestion VARCHAR(255) NULL,
+    StartDate DATE NULL,
+    EndDate DATE NULL
 );
 
 CREATE TABLE NearTransport (
