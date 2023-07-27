@@ -63,13 +63,10 @@
 
               $_SESSION['user_data'] = $user_data;
               $_SESSION['userid'] = $user_data['id'];
-
-
+              
               echo '<script type="text/javascript">';
-              echo 'window.localStorage.setItem("user_data", ' . json_encode($user_data) . ');';
-              echo 'window.localStorage.setItem("userid", ' . $user_data['id'] . ');';
-
-
+              echo 'window.localStorage.setItem("user_data", JSON.stringify(' . json_encode($user_data) . '));';
+              echo 'window.localStorage.setItem("userid", "' . $user_data['id'] . '");';
               if ($user['role'] === 'Intern') {
                 echo 'window.location.href = "./view/followup/followupintern/followintern.php";';
               } else {

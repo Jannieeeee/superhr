@@ -17,36 +17,9 @@
         </div>
 
         <div class="d-flex align-items-center">
-            <a href="#" class="text-decoration-none text-reset me-2">username
+            <a href=" http://localhost:3000/view/followup/followjob/followjob.php" class="text-decoration-none text-reset me-2">username
                 <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="40" />
             </a>
-            <div class="dropdown">
-                <a class="text-reset me-1 dropdown hidden-arrow" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class=" fs-4 bi bi-bell bi-lg text-dark"></i>
-
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                        <a class="dropdown-item" href="#">Some news</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="#">Another news</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="dropdown">
-                <a class="text-reset me-2 dropdown hidden-arrow" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fs-4 bi bi-three-dots-vertical bi-lg text-dark"></i>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#"> <i class="fas fa-user-alt pe-2"></i>My Profile</a></li>
-                    <li><a class="dropdown-item" href="#"> <i class="fas fa-cog pe-2"></i>Settings</a></li>
-                    <li><a class="dropdown-item" href="/"> <i class="fas fa-door-open pe-2"></i>Logout</a></li>
-                </ul>
-            </div>
         </div>
 
     </div>
