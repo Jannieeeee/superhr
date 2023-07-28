@@ -40,7 +40,7 @@ require_once '../../Component/Navbar.php';
             </div>
         </div>
         <div class="col-3">
-        <div class="">
+            <div class="">
                 <label for="" class="form-label" style="color:#444DDA">Status Name</label>
                 <div class="dropdown">
                     <button class="btn dropdown-toggle w-100" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border: 2px solid #444DDA;color: #444DDA;">
@@ -57,12 +57,12 @@ require_once '../../Component/Navbar.php';
         </div>
     </div>
 
-    <div class="row px-4 mt-4">
+    <div class="  row px-4 mt-4">
         <div class="col-4 ">
             <div id="candidates">
             </div>
         </div>
-        <div class="col-8 ">
+        <div id="blockcontent" class="col-8 ">
             <div class="shadow-lg p-4 rounded">
                 <div class="row">
                     <div class="col-md-2">
@@ -72,19 +72,29 @@ require_once '../../Component/Navbar.php';
                     </div>
                     <div class="col-md-6">
                         <div class="profile-head">
-                            <h5 class="mb-4" id="cfullname">
-                                Ploypichcha Anupatanun
-                            </h5>
-                            <h6 id="cpos">UX/UI</h6>
+                            <p>
+                                <span class="mb-4 h-5" id="tfullname">
+                                    xxxxxx xxxxx
+                                </span>
+                                <span class="mb-4 h5" id="efullname">
+                                    xxxxxx xxxxx
+                                </span>
+                            <p>
+                            <p>
+                                <span class="h6" id="cpos1">UX/UI</span> -
+                                <span class="h6" id="cpos2">UX/UI</span>
+                            </p>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="row mb-4">
                             <div class="col-sm-4">
-                                <a href="https://www.youtube.com/watch?v=WUrquTUH1bk" class="btn btn-outline-primary" style="color: #444DDA; border: 1px solid #444DDA;">Deline</a>
+                                <button class="btn btn-outline-primary" style="color: #444DDA; border: 1px solid #444DDA;" onclick="DeclineFunct()">Deline</button>
                             </div>
+
                             <div class="col-sm-5">
-                                <a href="https://www.youtube.com/watch?v=WUrquTUH1bk" class="btn btn-primary" style="background-color: #444DDA; border: 1px solid #444DDA;">Shot-list</a>
+
+                                <button id="btn1" onclick="btnAction()" class="btn btn-primary d-block" style="background-color: #444DDA; border: 1px solid #444DDA;">Short-list</button>
                             </div>
                         </div>
                     </div>
@@ -122,45 +132,49 @@ require_once '../../Component/Navbar.php';
                         </li>
                     </ul>
                     <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade active show" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                            <h5 class="mb-2">Personal Information</h5>
+                        <!-- Info tab -->
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-html-tab">
+                            <h5 class="mb-2"> Personal Information</h5>
                             <div class="row">
                                 <div class="col-md-8">
                                     <div class="row mb-3">
                                         <div class="col-sm-8">
                                             <p class="text-muted mb-0">Cityzen ID or Passport</p>
-                                            <p class=" mb-0">xxxxxxxxxx</p>
+                                            <p><span class=" mb-0" id="pid">xxxxxxxxxx</span> -
+                                                <span class=" mb-0" id="pidc">xxxxxxxxxx</span>
+                                            </p>
                                         </div>
                                         <div class="col-sm-4">
                                             <p class="text-muted mb-0">Gender</p>
-                                            <p class=" mb-0">Male</p>
+                                            <p class=" mb-0" id="gd">Male</p>
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <div class="col-sm-8">
                                             <p class="text-muted mb-0">Birth date</p>
-                                            <p class=" mb-0">xx/xx/xxxx</p>
+                                            <p class=" mb-0" id="bd">xx/xx/xxxx</p>
                                         </div>
                                         <div class="col-sm-4">
                                             <p class="text-muted mb-0">Age</p>
-                                            <p class=" mb-0">23</p>
+                                            <p class=" mb-0" id="ag">23</p>
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <div class="col-sm-8">
                                             <p class="text-muted mb-0">Nationality</p>
-                                            <p class=" mb-0">Thai</p>
+                                            <p class=" mb-0" id="ntl">Thai</p>
                                         </div>
                                         <div class="col-sm-4">
                                             <p class="text-muted mb-0">Religigion</p>
-                                            <p class="mb-0">Thai</p>
+                                            <p class="mb-0" id="rlg">Thai</p>
                                         </div>
                                     </div>
                                 </div><!--md8-->
                                 <hr>
                             </div><!--row-->
+
                             <!--2-->
                             <h5 class="mb-2">Education Information</h5>
                             <div class="row">
@@ -168,73 +182,48 @@ require_once '../../Component/Navbar.php';
                                     <div class="row mb-3">
                                         <div class="col-sm-8">
                                             <p class="text-muted mb-0">University</p>
-                                            <p class=" mb-0">xxxxxxxxxx</p>
+                                            <p class=" mb-0" id="uni">xxxxxxxxxx</p>
                                         </div>
                                         <div class="col-sm-4">
                                             <p class="text-muted mb-0">Faculty</p>
-                                            <p class=" mb-0">SIIT</p>
+                                            <p class=" mb-0" id="facu">SIIT</p>
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <div class="col-sm-8">
                                             <p class="text-muted mb-0">Major</p>
-                                            <p class=" mb-0">xxxxxxxx</p>
+                                            <p class=" mb-0" id="maj">xxxxxxxx</p>
                                         </div>
                                         <div class="col-sm-4">
                                             <p class="text-muted mb-0">Year</p>
-                                            <p class=" mb-0">3</p>
+                                            <p class=" mb-0" id="yrs">3</p>
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <div class="col-sm-8">
                                             <p class="text-muted mb-0">GPA</p>
-                                            <p class=" mb-0">3</p>
+                                            <p class=" mb-0" id="gpa">3</p>
                                         </div>
                                     </div>
                                 </div><!--md8-->
                                 <hr>
-                            </div><!--row-->
+                                <div>
+                                    <p class="text-muted mb-0">Note</p>
+                                    <p class=" mb-0" id="notes">lorem</p>
 
-                            <!--3-->
-                            <h5 class="mb-2">Application Information</h5>
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div class="row mb-3">
-                                        <div class="col-sm-8">
-                                            <p class="text-muted mb-0">Internship period</p>
-                                            <p class=" mb-0">xx/xx/xxxx-xx/xx/xxxx</p>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <p class="text-muted mb-0">Contect person</p>
-                                            <p class=" mb-0">xxx-xxxxx</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mb-3">
-                                        <div class="col-sm-8">
-                                            <p class="text-muted mb-0">Applicaton reson</p>
-                                            <p class=" mb-0">Applicaton reson</p>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <p class="text-muted mb-0">Phone number</p>
-                                            <p class=" mb-0">xxx-xxx-xxxx</p>
-                                        </div>
-                                    </div>
-
-
-                                </div><!--md8-->
-                                <hr>
-                            </div><!--row-->
-
-                            <div class="form-outline w-100 mb-3">
-                                <label class="form-label" for="textAreaExample">Note</label>
-                                <textarea class="form-control" id="textAreaExample" rows="4" style="background: #fff;"></textarea>
+                                </div>
                             </div>
+                        </div>
 
-                        </div><!--pane-->
-                        <div class="tab-pane fade " id="pills-interview" role="tabpanel" aria-labelledby="pills-intreview-tab">
+                        <!-- Test result -->
+                        <div class="tab-pane fade" id="pills-test" role="tabpanel" aria-labelledby="pills-css-tab">
+
+                        </div>
+
+                        <!-- Interview -->
+                        <div class="tab-pane fade" id="pills-interview" role="tabpanel" aria-labelledby="pills-js-tab">
                             <h5 class="mb-2">Schedule Interview</h5>
                             <div class="col-sm-6 mb-3">
                                 <p class="text-muted mb-0"></i>Attendess</p>
@@ -242,30 +231,33 @@ require_once '../../Component/Navbar.php';
                             </div>
                             <div class="col-sm-6 mb-3">
                                 <p class="text-muted mb-0">Location(or link for online interview)</p>
-                                <i class="bi bi-geo-alt-fill"></i><input type="text" name="inp" class="form-control">
+                                <i class="bi bi-geo-alt-fill"></i>
+                                <input type="text" name="locationLink" id="locationLink" class="form-control">
                             </div>
                             <div class="col-sm-6 mb-3">
                                 <p class="text-muted mb-0">Date</p>
-                                </i> <input type="date" name="inp" class="form-control">
+                                </i>
+                                <input type="date" name="interdate" id="interdate" class="form-control">
                             </div>
 
                             <div class="row mb-3">
                                 <div class=" col-sm-5 mb-3">
                                     <p class="text-muted mb-0">Start Time</p>
-                                    <input type="time" name="inp" class="form-control">
+                                    <input type="time" name="intersttime" id="intersttime" class="form-control">
                                 </div>
                                 <div class="col-sm-5 mb-3">
                                     <p class="text-muted mb-0">End Time</p>
-                                    <input type="time" name="inp" class="form-control">
+                                    <input type="time" name="interentime" id="interentime" class="form-control">
                                 </div>
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                     <button class="btn btn-primary" type="submit" style="background-color: #444DDA;">Send inviation</button>
                                 </div>
                             </div>
-                        </div><!--pane-->
+                        </div>
 
 
-                        <div class="tab-pane fade " id="pills-contract" role="tabpanel" aria-labelledby="pills-contract-tab">
+                        <!-- Contract -->
+                        <div class="tab-pane fade" id="pills-contract" role="tabpanel" aria-labelledby="pills-js-tab">
                             <h5 class="mb-3">Contract Detail</h5>
                             <div class="row">
                                 <div class="col-md-9">
@@ -333,13 +325,32 @@ require_once '../../Component/Navbar.php';
                                 </div>
                             </div>
                         </div>
-
                     </div>
+
                 </div>
             </div>
 
         </div>
     </div>
+
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to decline this candidate?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeclineButton">Yes, Decline</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>

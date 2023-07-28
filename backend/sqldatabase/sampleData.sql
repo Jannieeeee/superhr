@@ -4,6 +4,8 @@ select * from  candidate_followup;
 select * from users;
 select * from education;
 
+SELECT * FROM user_details;
+
 SELECT users.*, positions.position_1 ,candidate_followup.*
     FROM users 
      JOIN positions ON users.id = positions.user_id 
@@ -46,3 +48,7 @@ select * from TestAssessmentCriteria;
 select * from InterviewAssessmentCriteria;
 
 select * from  candidate_followup;
+
+select * from user_details;
+select * from position_details;
+

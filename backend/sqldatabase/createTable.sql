@@ -124,3 +124,160 @@ CREATE TABLE InterviewAssessmentCriteria (
     FOREIGN KEY (PositionID) REFERENCES CreatePosition(PositionID)
 );
 
+CREATE TABLE ScheduleInterview (
+    InterviewID INT PRIMARY KEY AUTO_INCREMENT,
+    LocationLink VARCHAR(255) NOT NULL,
+    InterviewDate DATE NOT NULL,
+    StartTime TIME NOT NULL,
+    EndTime TIME NOT NULL,
+    UserID INT,
+    FOREIGN KEY (UserID) REFERENCES users(id)
+);
+
+DELIMITER //
+CREATE PROCEDURE InsertScheduleInterview(
+    IN p_LocationLink VARCHAR(255),
+    IN p_InterviewDate DATE,
+    IN p_StartTime TIME,
+    IN p_EndTime TIME,
+    IN p_UserID INT
+)
+BEGIN
+    INSERT INTO ScheduleInterview(
+        LocationLink, 
+        InterviewDate, 
+        StartTime, 
+        EndTime, 
+        UserID
+    )
+    VALUES(
+        p_LocationLink, 
+        p_InterviewDate, 
+        p_StartTime, 
+        p_EndTime, 
+        p_UserID
+    );
+END //
+DELIMITER ;
+
+
+
+
+CREATE VIEW user_details AS
+SELECT 
+  users.id, 
+  users.username, 
+  users.password, 
+  users.full_name_th, 
+  users.full_name_eng, 
+  users.id_passport, 
+  users.gender, 
+  users.nationality, 
+  users.date_of_birth, 
+  users.religion, 
+  users.email, 
+  users.phone_number, 
+  users.role, 
+  users.area, 
+  users.areafrom, 
+  users.areato, 
+  addresses.house_registration_address, 
+  addresses.current_address, 
+  positions.position_1, 
+  positions.position_2, 
+  positions.from_date, 
+  positions.to_date, 
+  positions.reason, 
+  contacts.contact_person, 
+  contacts.contact_phone_number, 
+  education.education_level, 
+  education.university, 
+  education.faculty, 
+  education.major, 
+  education.year, 
+  education.gpa, 
+  documents.resume_data, 
+  documents.certi_data, 
+  documents.hr_data, 
+  documents.idcard_data, 
+  documents.photo_data, 
+  salaries.salary, 
+  candidate_followup.status, 
+  candidate_followup.followup_date, 
+  candidate_followup.typeapp, 
+  candidate_followup.notes, 
+  candidate_followup.cancel_reason 
+FROM users 
+LEFT JOIN addresses ON users.id = addresses.user_id 
+LEFT JOIN positions ON users.id = positions.user_id 
+LEFT JOIN contacts ON users.id = contacts.user_id 
+LEFT JOIN education ON users.id = education.user_id 
+LEFT JOIN documents ON users.id = documents.user_id 
+LEFT JOIN salaries ON users.id = salaries.user_id 
+LEFT JOIN candidate_followup ON users.id = candidate_followup.user_id;
+
+CREATE VIEW position_details AS
+SELECT 
+    CP.PositionID,
+    CP.PositionName,
+    CP.WorkType,
+    CP.Location,
+    CP.Station,
+    CP.Enable,
+    CP.TestRequire,
+    CP.TestPeriod,
+    CP.TestQuestion,
+    CP.StartDate,
+    CP.EndDate,
+    NT.TransportType,
+    TAC.Criteria AS TestCriteria,
+    IAC.Criteria AS InterviewCriteria
+FROM
+    CreatePosition CP
+    LEFT JOIN NearTransport NT ON CP.PositionID = NT.PositionID
+    LEFT JOIN TestAssessmentCriteria TAC ON CP.PositionID = TAC.PositionID
+    LEFT JOIN InterviewAssessmentCriteria IAC ON CP.PositionID = IAC.PositionID;
+
+
+DELIMITER //
+CREATE PROCEDURE AddPosition(
+    IN PositionName VARCHAR(255), 
+    IN WorkType ENUM('Hybrid', 'WFH', 'Onsite'), 
+    IN Location VARCHAR(255), 
+    IN Station VARCHAR(255), 
+    IN Enable BOOLEAN, 
+    IN TestRequire BOOLEAN, 
+    IN TestPeriod INT, 
+    IN TestQuestion VARCHAR(255), 
+    IN StartDate DATE, 
+    IN EndDate DATE
+)
+BEGIN
+    INSERT INTO CreatePosition(
+        PositionName, 
+        WorkType, 
+        Location, 
+        Station, 
+        Enable, 
+        TestRequire, 
+        TestPeriod, 
+        TestQuestion, 
+        StartDate, 
+        EndDate
+    )
+    VALUES(
+        PositionName, 
+        WorkType, 
+        Location, 
+        Station, 
+        Enable, 
+        TestRequire, 
+        TestPeriod, 
+        TestQuestion, 
+        StartDate, 
+        EndDate
+    );
+END //
+
+DELIMITER ;
+

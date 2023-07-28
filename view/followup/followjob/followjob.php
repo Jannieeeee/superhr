@@ -42,7 +42,7 @@
 
     <div class="container emp-profile">
 
-      <div class="row mb-3 p-2">
+      <div class="row mb-3 p-4 ">
         <div class="col-3">
           <div class="profile-img">
             <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" alt="" />
@@ -54,10 +54,15 @@
               <?php echo $user_data['full_name_th']; ?>
             </h4>
             <div class="d-flex gap-2">
-              <div class="mb-4"><img src="C:Users\malli\Documents\internship\doc\envelope (1).png" width="24" height="24" alt=""><?php echo $user_data['email']; ?></div>
-              <div class="mb-4"><img src="C:\Users\malli\Documents\internship\doc\phone-call.png" width="24" height="24" alt=""> xxxxxxxxx</div>
-              <div class="mb-4"><img src="C:\Users\malli\Documents\internship\doc\document-signed.png" alt="" width="24" height="24"><a href="#" class="text-decoration-none">document</a> </div>
+              <div class="mb-4 bi-1-square"><?php echo $user_data['email']; ?></div>
+              <div class="mb-4 bi-phone-fill">xxxxxxxxx</div>
+              <div class="mb-4 bi-file"><a>document</a> </div>
             </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="profile-work">
+            <button class="btn btn-primary">Edit Profile</button>
           </div>
         </div>
       </div>

@@ -3,21 +3,27 @@ var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggl
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl)
 })
+$('#pstatus').val("");
+$('#pwtype').val("");
+
 
 function selectJob(posid) {
     pid = posid
     fetch(`../../backend/CreatePosition/FetchPositionDetail.php?PositionID=${posid}`)
         .then(response => response.json())
         .then(data => {
-            console.log(data)
-            createC(data.testAssessmentCriteria, "c1")
-            createC(data.interviewAssessmentCriteria, "c2")
-            document.getElementById("pname").value = data.position.PositionName
+            if (data.testAssessmentCriteria != null) {
+                createC(data.testAssessmentCriteria, "c1")
+            }
+            if (data.interviewAssessmentCriteria != null) {
+                createC(data.interviewAssessmentCriteria, "c2")
+            }
+            document.getElementById("pname").innerHTML = data.position.PositionName
             document.getElementById("pname2").value = data.position.PositionName
             document.getElementById("pmrt").value = data.position.Station
-            document.getElementById("pwtype").value = data.position.WorkType
             document.getElementById("pbts").value = data.position.Station
-            document.getElementById("pstatus").value = data.position.Enable == "0" ? "Closing" : "Openning"
+            document.getElementById("pwtype").value = data.position.WorkType.toLowerCase();
+            document.getElementById("pstatus").value = data.position.Enable == "0" ? "Closing" : "Opening"
             document.getElementById("ploca").value = data.position.Location
             document.getElementById("ptpd").value = data.position.TestPeriod
             document.getElementById("ptqt").value = data.position.TestQuestion
@@ -139,7 +145,7 @@ function addInterview() {
     let uniqueId = new Date().getTime();
 
     document.getElementById("c2").innerHTML +=
-    `
+        `
     <div class="input-group mb-3" id="${uniqueId}">
         <input type="text" class="form-control" placeholder="Criteria" aria-label="Criteria" value="">
         <button class="sv btn btn-outline-success " type="button" onclick="saveInterview("Interview")" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
@@ -155,7 +161,7 @@ function addTest() {
     let uniqueId = new Date().getTime();
 
     document.getElementById("c1").innerHTML +=
-    `
+        `
     <div class="input-group mb-3" id="${uniqueId}">
         <input type="text" class="form-control" placeholder="Criteria" aria-label="Criteria" value="">
         <button class="sv btn btn-outline-success " type="button" onclick="saveInterview("Test")" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
@@ -178,7 +184,7 @@ function deleteTest(uniqueId) {
 
 function saveInterview(db) {
     let data = [];
-    var itemid = db=="Test"?"c1":"c2"
+    var itemid = db == "Test" ? "c1" : "c2"
     let elements = document.getElementById(itemid).children;
     for (let i = 0; i < elements.length; i++) {
         console.log(elements[i].children[0].value);
@@ -187,7 +193,7 @@ function saveInterview(db) {
     }
 
 
-    fetch('../../backend/CreatePosition/Update'+db+'Criteria.php', {
+    fetch('../../backend/CreatePosition/Update' + db + 'Criteria.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -197,6 +203,32 @@ function saveInterview(db) {
             data: data
         })
     })
-    
+
 }
 
+function searchPosition(type) {
+    var searchTerm = document.getElementById("searchTerm").value;
+    $.ajax({
+      url: '../../backend/CreatePosition/SearchPosition.php',
+      type: 'POST',
+      data: {
+        term: searchTerm,
+        type: type
+      },
+      success: function(data) {
+        if (type === 'Opening') {
+          $('#toggleDiv1').html(data);
+        } else {
+          $('#toggleDiv2').html(data);
+        }
+      },
+      error: function() {
+        console.log('There was an error.');
+      }
+    });
+  }
+  
+  function searchPositionAll(){
+    searchPosition('Opening')
+    searchPosition('Closing')
+  }

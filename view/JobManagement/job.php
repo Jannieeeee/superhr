@@ -21,7 +21,6 @@
   <link rel="stylesheet" href="job.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-  <script defer src="./script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 </head>
@@ -45,16 +44,17 @@
       <div class="col-sm-6 col-md-5 col-lg-4 bg-white">
         <div class="my-2">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search..." aria-label="Search">
-            <button class="btn btn-outline-secondary" type="button">
+            <input type="text" id="searchTerm" class="form-control" placeholder="Search..." aria-label="Search">
+            <button class="btn btn-outline-secondary" type="button" onclick="searchPositionAll()">
               <i class="fas fa-search"></i>
             </button>
+
           </div>
         </div>
 
         <div class="btn-group w-100 my-1">
-          <button id="openButton" class="btn btn-outline-primary">Opening</button>
-          <button id="closeButton" class="btn btn-outline-secondary">Closing</button>
+          <button id="openButton" class="btn btn-outline-primary" onclick="searchPosition('Opening')">Opening</button>
+          <button id="closeButton" class="btn btn-outline-secondary" onclick="searchPosition('Closing')">Closing</button>
         </div>
 
 
@@ -89,6 +89,7 @@
             echo "No positions available";
           }
           ?>
+
         </div>
 
         <div id="toggleDiv2" style="display: none;">
@@ -194,7 +195,13 @@
                 <div class="col-md-6">
                   <p class="text-muted mb-2">Work type</p>
                   <div class="input-group mb-3">
-                    <input id="pwtype" class="form-control mb-0" type="text" disabled>
+
+                    <select id="pwtype" class="form-control mb-0" disabled>
+                      <option value="wfh">WFH</option>
+                      <option value="hybrid">Hybrid</option>
+                      <option value="onsite">Onsite</option>
+                    </select>
+
                     <button class="sv btn btn-outline-success d-none" type="button" onclick="saveData('pwtype', 'WorkType')" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
                       <i class=" bi bi-check-circle"></i>
                     </button>
@@ -216,7 +223,7 @@
                   <p class="text-muted mb-2">Status</p>
 
                   <div class="input-group mb-3">
-                    <select id="pstatus" class="form-control mb-0"  disabled>
+                    <select id="pstatus" class="form-control mb-0" disabled>
                       <option value="Opening">Opening</option>
                       <option value="Closing">Closing</option>
                     </select>
@@ -321,5 +328,6 @@
     });
   });
 </script>
+<script async src="./script.js"></script>
 
 </html>

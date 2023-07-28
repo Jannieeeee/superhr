@@ -50,7 +50,7 @@
             <div class="col-auto col-md-8 pe-5">
               <select id="postype" name="postype" class="form-select">Select you role
                 <option value="wfh">WFH</option>
-                <option value="hybri">Hybrid</option>
+                <option value="hybrid">Hybrid</option>
                 <option value="onsite">Onsite</option>
               </select>
             </div>

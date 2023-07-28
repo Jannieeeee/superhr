@@ -80,7 +80,7 @@ if ($result->num_rows > 0) {
                             </div>
                         </div>
                         <div class="col-8">
-                            <p class="">' . $row['full_name_eng'] . '</p>
+                            <p class="">'.$row['full_name_th'].' - ' . $row['full_name_eng'] . '</p>
                             <p class="">' . $row['position_1'] . '</p>
                         </div>
                     </div>
