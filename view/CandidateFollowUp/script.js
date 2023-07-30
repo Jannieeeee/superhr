@@ -2,10 +2,27 @@ var AllApps;
 var CurApps;
 $(document).ready(function () {
     fetchApplication()
+    fetchPositionList()
 });
 
+function fetchPositionList() {
+    $.ajax({
+        url: '../../backend/CandidateFollowup/FetchPositionList.php',
+        type: 'GET',
+        dataType: 'json', 
+        success: function(data) {
+            console.log(data); 
+            // $('#listApps').html(html);
+        },
+        error: function(e) {
+            console.log('There was an error.' + JSON.stringify(e));
+        }
+    });
+
+}
 function fetchApplication() {
-    var userid = localStorage.getItem('userid');
+    var userid = JSON.parse(localStorage.getItem('user')).id;
+    console.log(userid);
 
     $.ajax({
         url: '../../backend/CandidateFollowup/FetchMyApplication.php',
@@ -21,7 +38,7 @@ function fetchApplication() {
             // iterate over the applications and append them to the listApps div
             var html = '';
             for(var i=0; i<AllApps.length; i++) {
-                html += '<div class="card" style="cursor: pointer;" onClick="onSelect(' + i + ')">';
+                html += '<div class="card my-3 shadow-sm" style="cursor: pointer;" onClick="onSelect(' + i + ')">';
                 html += '<div class="card-body">';
                 html += '<div class="d-flex justify-content-between">';
                 html += '<div class="h6 card-title">' + AllApps[i].position_1 +'/'+AllApps[i].position_2 + '</div>';
@@ -37,8 +54,8 @@ function fetchApplication() {
 
             $('#listApps').html(html);
         },
-        error: function() {
-            console.log('There was an error.');
+        error: function(e) {
+            console.log('There was an error.' + JSON.stringify(e));
         }
     });
 }

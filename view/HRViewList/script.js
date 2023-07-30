@@ -96,40 +96,40 @@ $(document).ready(function () {
     });
 
 
-    function fetchCandidates() {
-        let positions = [];
-        $(".dropdown-menu input[type=checkbox]:checked").each(function () {
-            positions.push($(this).val());
-        });
-
-        let statuses = [];
-        $("#searchStatus input[type=checkbox]:checked").each(function () {
-            statuses.push($(this).val());
-        });
-
-        let fullNameTh = $('#searchName').val();
-        let fullNameEn = $('#searchName').val();
-
-        $.ajax({
-            url: '../../backend/HrviewList/fetchCandidates.php',
-            type: 'POST',
-            data: {
-                positions: positions,
-                full_name_th: fullNameTh,
-                full_name_en: fullNameEn,
-                status: statuses
-            },
-            success: function (data) {
-                $('#candidates').html(data);
-            },
-            error: function () {
-                console.log('There was an error.');
-            }
-        });
-    }
 
 
 });
+function fetchCandidates() {
+    let positions = [];
+    $(".dropdown-menu input[type=checkbox]:checked").each(function () {
+        positions.push($(this).val());
+    });
+
+    let statuses = [];
+    $("#searchStatus input[type=checkbox]:checked").each(function () {
+        statuses.push($(this).val());
+    });
+
+    let fullNameTh = $('#searchName').val();
+    let fullNameEn = $('#searchName').val();
+
+    $.ajax({
+        url: '../../backend/HrviewList/fetchCandidates.php',
+        type: 'POST',
+        data: {
+            positions: positions,
+            full_name_th: fullNameTh,
+            full_name_en: fullNameEn,
+            status: statuses
+        },
+        success: function (data) {
+            $('#candidates').html(data);
+        },
+        error: function () {
+            console.log('There was an error.');
+        }
+    });
+}
 
 function search() {
     fetchCandidates()
@@ -295,7 +295,7 @@ function StatusManagement() {
 function updateButton() {
     if (currentStatus === "pre_screen") {
         $("#btn1").text("Test");
-    } 
+    }
 }
 
 function btnAction() {

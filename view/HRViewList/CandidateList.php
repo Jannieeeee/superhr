@@ -9,6 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <script defer src="script.js"></script>
+    <script defer src="scriptmore.js"></script>
     <title>Candidate List</title>
 </head>
 
@@ -112,7 +113,9 @@ require_once '../../Component/Navbar.php';
                         <h6><i class="bi bi-geo-alt" style="color: #444DDA;"></i> <span id="cads">Bankok,Thailand</span></h6>
                     </div>
                     <div class="col-sm-3">
-                        <h6><i class="bi bi-file-earmark"></i><a href="#" class="text-decoration-none"> document</a> </h6>
+                        <h6><i class="bi bi-file-earmark"></i>
+                            <a style="cursor: pointer;" onclick="dowloadfiles()" class="text-decoration-none"> document</a>
+                        </h6>
                     </div>
                 </div>
 

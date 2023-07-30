@@ -25,21 +25,27 @@ function changeStepIndicator(index) {
 
 function nextstep() {
     var valid = true;
-    var inputs = document.querySelectorAll(`#step${currentPage+1} input`);
-    console.log(`step${currentPage+1} input`)
+    var inputs = document.querySelectorAll(`#step${currentPage + 1} input`);
     for (var i = 0; i < inputs.length; i++) {
+
         var input = inputs[i];
-        if (input.value.trim() === '' || !input.checkValidity()) {
+        // Check for 'nv' in classList
+        if (input.value.trim() === '' || !input.checkValidity() ) {
             input.classList.add('is-invalid');
             valid = false;
         } else {
             input.classList.remove('is-invalid');
         }
+        if(input.classList.contains('nv')){
+            input.classList.remove('is-invalid');
+            valid = true;
+
+        }
     }
 
     if (valid) {
         changeStepIndicator(currentPage += 1);
-        if(currentPage == 3){
+        if (currentPage == 3) {
             saveData();
         }
         if (currentPage == 1) {
@@ -73,7 +79,7 @@ $("#addRow").click(function () {
     html += '<div class="row align-items-center py-2">';
     html += '<div class= "col-md-8">';
     html += '<label for="input" class="col-form-label">criteria</label>';
-    html += '<input type="text" name="testCtr' + cId + '" id="testCtr' + cId + '" class="form-control m-input" placeholder="Enter criteria" autocomplete="off">';
+    html += '<input type="text" name="testCtr' + cId + '" id="testCtr' + cId + '" class="critest form-control m-input" placeholder="Enter criteria" autocomplete="off">';
     html += '</div>';
     html += '</div>';
     $('#newRow').append(html);
@@ -89,7 +95,7 @@ $("#addRow2").click(function () {
     html += '<div class="row align-items-center py-2">';
     html += '<div class= "col-md-8">';
     html += '<label for="input" class="col-form-label">criteria</label>';
-    html += '<input type="text" name="interCtr' + cId2 + '" id="interCtr' + cId2 + '" class="form-control m-input" placeholder="Enter criteria" autocomplete="off">';
+    html += '<input type="text" name="interCtr' + cId2 + '" id="interCtr' + cId2 + '" class="criinterview form-control m-input" placeholder="Enter criteria" autocomplete="off">';
     html += '</div>';
     html += '</div>';
     $('#newRow2').append(html);
@@ -159,3 +165,5 @@ function saveData() {
     window.location.href = "select.php";
 
 }
+
+

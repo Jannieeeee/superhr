@@ -39,6 +39,8 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         $data['testAssessmentCriteria'][] = [
+            'CriteriaID' => $row['CriteriaID'],
+            'PositionID' => $row['PositionID'],
             'Criteria' => $row['Criteria']
         ];
     }
@@ -51,6 +53,8 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         $data['interviewAssessmentCriteria'][] = [
+            'CriteriaID' => $row['CriteriaID'],
+            'PositionID' => $row['PositionID'],
             'Criteria' => $row['Criteria']
         ];
     }

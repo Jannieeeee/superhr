@@ -142,7 +142,7 @@
               <label for="inputPassword6" class="col-form-label">Test period</label>
             </div>
             <div class="col-auto col-md-8 pe-5">
-              <input type="text" id="postestpr" name="postestpr" class="form-control" placeholder="How many days?" aria-describedby="passwordHelpInline">
+              <input type="text" id="postestpr" name="postestpr " class="form-control nv" placeholder="How many days?" aria-describedby="passwordHelpInline">
             </div>
           </div>
           <div class="row align-items-center py-2 reqarea">
@@ -162,7 +162,7 @@
           <div class="row align-items-center py-2">
             <div class=" col-md-8 ">
               <label for="inputPassword6" class="col-form-label">criteria</label>
-              <input type="text" name="testCtr1" id="testCtr1" class="form-control m-input" placeholder="Enter criteria" autocomplete="off">
+              <input type="text" name="testCtr1" id="testCtr1" class="form-control m-input nv" placeholder="Enter criteria" autocomplete="off">
             </div>
           </div>
           <div id="newRow"></div>

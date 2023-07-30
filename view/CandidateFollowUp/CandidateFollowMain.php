@@ -23,8 +23,8 @@
 
     <div class="row mt-3 p-2">
         <div class="col-4 p-1">
-            <h5 class="text-center">Your application</h5>
-            <div id="listApps">
+            <h2 class="text-center fw-bold">Your application</h2>
+            <div id="listApps" class="px-2">
 
             </div>
 

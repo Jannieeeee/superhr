@@ -12,11 +12,16 @@ function selectJob(posid) {
     fetch(`../../backend/CreatePosition/FetchPositionDetail.php?PositionID=${posid}`)
         .then(response => response.json())
         .then(data => {
+            
             if (data.testAssessmentCriteria != null) {
                 createC(data.testAssessmentCriteria, "c1")
+            }else{
+                document.getElementById("c1").innerHTML = "No Criteria"
             }
             if (data.interviewAssessmentCriteria != null) {
                 createC(data.interviewAssessmentCriteria, "c2")
+            }else{
+                document.getElementById("c2").innerHTML = "No Criteria"
             }
             document.getElementById("pname").innerHTML = data.position.PositionName
             document.getElementById("pname2").value = data.position.PositionName
@@ -33,19 +38,19 @@ function selectJob(posid) {
 
 
 function createC(data, t) {
-    let uniqueId = new Date().getTime();
     var n = 1;
+    let uniqueId = new Date().getTime();
     var db = t == "c1" ? "Test" : "Interview"
     document.getElementById(t).innerHTML = "";
     for (const item of data) {
         document.getElementById(t).innerHTML +=
             `
-      <div class="input-group mb-3">
-      <input type="text" class="form-control" placeholder="Criteria" aria-label="Criteria" value="${item.Criteria}">
-      <button class="sv btn btn-outline-success d-none" type="button" onclick="saveInterview('${db}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
+      <div class="input-group mb-3" id="${uniqueId}">
+      <input type="text" class="form-control" placeholder="Criteria" aria-label="Criteria" value="${item.Criteria}" id="${uniqueId}value">
+      <button class="sv btn btn-outline-success d-none" type="button" onclick="save${db}('${uniqueId}', '${item.CriteriaID}', '${item.PositionID}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
         <i class=" bi bi-check-circle"></i>
       </button>
-      <button class="sv btn btn-outline-danger d-none" type="button" onclick="deleteInterview('${uniqueId}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
+      <button class="sv btn btn-outline-danger d-none" type="button" onclick="delete${db}('${uniqueId}', '${item.CriteriaID}', '${item.PositionID}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
       <i class=" bi bi-trash"></i>
     </button>
     </div>
@@ -147,11 +152,11 @@ function addInterview() {
     document.getElementById("c2").innerHTML +=
         `
     <div class="input-group mb-3" id="${uniqueId}">
-        <input type="text" class="form-control" placeholder="Criteria" aria-label="Criteria" value="">
-        <button class="sv btn btn-outline-success " type="button" onclick="saveInterview("Interview")" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
+        <input id="${uniqueId}value" type="text" class="form-control" placeholder="Criteria" aria-label="Criteria" value="">
+        <button class="sv btn btn-outline-success " type="button" onclick="insertInterview('${uniqueId}', '${pid}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
         <i class=" bi bi-check-circle"></i>
         </button>
-        <button class="sv btn btn-outline-danger " type="button" onclick="deleteInterview('${uniqueId}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+        <button class="sv btn btn-outline-danger " type="button" onclick="deleteInterview('${uniqueId}', '', '')" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
         <i class=" bi bi-trash"></i>
         </button>
     </div>
@@ -163,72 +168,102 @@ function addTest() {
     document.getElementById("c1").innerHTML +=
         `
     <div class="input-group mb-3" id="${uniqueId}">
-        <input type="text" class="form-control" placeholder="Criteria" aria-label="Criteria" value="">
-        <button class="sv btn btn-outline-success " type="button" onclick="saveInterview("Test")" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
+        <input id="${uniqueId}value" type="text" class="form-control" placeholder="Criteria" aria-label="Criteria" value="">
+        <button class="sv btn btn-outline-success " type="button" onclick="insertTest('${uniqueId}', '${pid}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Save">
         <i class=" bi bi-check-circle"></i>
         </button>
-        <button class="sv btn btn-outline-danger " type="button" onclick="deleteTest('${uniqueId}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+        <button class="sv btn btn-outline-danger " type="button" onclick="deleteTest('${uniqueId}','','')" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
         <i class=" bi bi-trash"></i>
         </button>
     </div>
     `
 }
-function deleteInterview(uniqueId) {
+function deleteInterview(uniqueId, cid, pid) {
     let element = document.getElementById(uniqueId);
-    element.parentNode.removeChild(element);
-}
-function deleteTest(uniqueId) {
-    let element = document.getElementById(uniqueId);
-    element.parentNode.removeChild(element);
-}
-
-function saveInterview(db) {
-    let data = [];
-    var itemid = db == "Test" ? "c1" : "c2"
-    let elements = document.getElementById(itemid).children;
-    for (let i = 0; i < elements.length; i++) {
-        console.log(elements[i].children[0].value);
-        const element = elements[i];
-        data.push(element.children[0].value);
+    if (cid != ""){
+        UpdateCrit("delete_interview", cid, pid, "")
     }
-
-
-    fetch('../../backend/CreatePosition/Update' + db + 'Criteria.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            pid: pid,
-            data: data
-        })
-    })
+    element.parentNode.removeChild(element);
 
 }
+function saveInterview(uniqueId, cid, pid,) {
+    let criteria = document.getElementById(uniqueId + "value").value;
+    UpdateCrit("update_interview", cid, pid, criteria)
+}
+function insertInterview(uniqueId, pid) {
+    let element = document.getElementById(uniqueId);
+    let criteria = document.getElementById(uniqueId + "value").value;
+    let cid = new Date().getTime();
+    UpdateCrit("insert_interview", cid, pid, criteria)
+}
+// Test
+function deleteTest(uniqueId, cid, pid) {
+    let element = document.getElementById(uniqueId);
+    if (cid != ""){
+        UpdateCrit("delete_test", cid, pid, "")
+    }
+    element.parentNode.removeChild(element);
+
+}
+function saveTest(uniqueId, cid, pid,) {
+    let criteria = document.getElementById(uniqueId + "value").value;
+    UpdateCrit("update_test", cid, pid, criteria)
+}
+function insertTest(uniqueId, pid) {
+    let element = document.getElementById(uniqueId);
+    let criteria = document.getElementById(uniqueId + "value").value;
+    let cid = new Date().getTime();
+    UpdateCrit("insert_test", cid, pid, criteria)
+}
+
+
+
 
 function searchPosition(type) {
     var searchTerm = document.getElementById("searchTerm").value;
     $.ajax({
-      url: '../../backend/CreatePosition/SearchPosition.php',
-      type: 'POST',
-      data: {
-        term: searchTerm,
-        type: type
-      },
-      success: function(data) {
-        if (type === 'Opening') {
-          $('#toggleDiv1').html(data);
-        } else {
-          $('#toggleDiv2').html(data);
+        url: '../../backend/CreatePosition/SearchPosition.php',
+        type: 'POST',
+        data: {
+            term: searchTerm,
+            type: type
+        },
+        success: function (data) {
+            if (type === 'Opening') {
+                $('#toggleDiv1').html(data);
+            } else {
+                $('#toggleDiv2').html(data);
+            }
+        },
+        error: function () {
+            console.log('There was an error.');
         }
-      },
-      error: function() {
-        console.log('There was an error.');
-      }
     });
-  }
-  
-  function searchPositionAll(){
+}
+
+function searchPositionAll() {
     searchPosition('Opening')
     searchPosition('Closing')
-  }
+}
+
+function UpdateCrit(command, criteria_id, position_id, criteria) {
+
+    $.ajax({
+        type: 'POST',
+        url: '../../backend/CreatePosition/UpdateCri.php',
+        data: {
+            command: command,
+            criteria_id: criteria_id,
+            position_id: position_id,
+            criteria: criteria
+        },
+        success: function (response) {
+            console.log(response); // Show the response from the PHP script
+            alert(response);
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr.responseText); // Show response from the PHP script for debugging purposes
+            alert(xhr.responseText);
+        }
+    });
+}

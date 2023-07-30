@@ -1,6 +1,6 @@
 
 
-<nav class="navbar navbar-light bg-white">
+<nav class="navbar navbar-light bg-white shadow-sm">
     <div class="container-fluid">
         <div class="row d-flex align-items-center">
             <div class="col-sm-2 ">
@@ -40,25 +40,17 @@
             <div>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     <li class="nav-item">
-                        <a href="/SortByPos/position.php" class="nav-link align-middle px-0">
-                            <span class="ms-1 d-none d-sm-inline">Open position</span>
+                        <a href="http://localhost:3000/view/Application/InternApplication.php" class="nav-link align-middle px-0">
+                            <span class="ms-1 d-none d-sm-inline">Application</span>
                         </a>
                     </li>
+
                     <li class="nav-item">
-                        <a href="/SortByPos/position.php" class="nav-link align-middle px-0">
-                            <span class="ms-1 d-none d-sm-inline">Sort by position</span>
+                        <a href="http://localhost:3000/view/CandidateFollowUp/CandidateFollowMain.php" class="nav-link align-middle px-0">
+                            <span class="ms-1 d-none d-sm-inline">Application Following</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="/SortByStatus/sstatus.php" class="nav-link align-middle px-0">
-                            <span class="ms-1 d-none d-sm-inline">Sort by status</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/CreateJobPosition/job.php" class="nav-link align-middle px-0">
-                            <span class="ms-1 d-none d-sm-inline">Create job</span>
-                        </a>
-                    </li>
+
                 </ul>
             </div>
 

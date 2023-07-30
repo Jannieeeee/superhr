@@ -35,11 +35,7 @@ select * from users;
 select * from positions;
 select * from candidate_followup;
 
-SELECT * FROM users 
-    JOIN positions ON users.id = positions.user_id 
-    JOIN candidate_followup ON users.id = candidate_followup.user_id 
-    Where users.id = 1;
-    
+
     
     
 select * from createPosition;
@@ -48,7 +44,4 @@ select * from TestAssessmentCriteria;
 select * from InterviewAssessmentCriteria;
 
 select * from  candidate_followup;
-
-select * from user_details;
-select * from position_details;
-
+select * from candidate_detail;

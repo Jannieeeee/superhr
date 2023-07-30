@@ -8,73 +8,16 @@ CREATE TABLE users (
   full_name_th VARCHAR(100),
   full_name_eng VARCHAR(100),
   id_passport VARCHAR(50),
+  id_citizen VARCHAR(50),
   gender VARCHAR(10),
   nationality VARCHAR(50),
   date_of_birth DATE,
   religion VARCHAR(50),
   email VARCHAR(100),
   phone_number VARCHAR(20),
-  role VARCHAR(100),
-  area VARCHAR(100),
-  areafrom VARCHAR(100),
-  areato VARCHAR(100)
-);
-
-CREATE TABLE addresses (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT,
-  house_registration_address VARCHAR(100),
-  current_address VARCHAR(100),
-  FOREIGN KEY (user_id) REFERENCES users(id)
-);
-
-CREATE TABLE positions (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT,
-  position_1 VARCHAR(50),
-  position_2 VARCHAR(50),
-  from_date DATE,
-  to_date DATE,
-  reason VARCHAR(100),
-  FOREIGN KEY (user_id) REFERENCES users(id)
-);
-
-CREATE TABLE contacts (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT,
-  contact_person VARCHAR(100),
-  contact_phone_number VARCHAR(20),
-  FOREIGN KEY (user_id) REFERENCES users(id)
-);
-
-CREATE TABLE education (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT,
-  education_level VARCHAR(50),
-  university VARCHAR(100),
-  faculty VARCHAR(100),
-  major VARCHAR(100),
-  year INT,
-  gpa DECIMAL(3,2),
-  FOREIGN KEY (user_id) REFERENCES users(id)
-);
-
-CREATE TABLE documents (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT,
-  resume_data LONGTEXT,
-  certi_data LONGTEXT,
-  hr_data LONGTEXT,
-  idcard_data LONGTEXT,
-  photo_data LONGTEXT,
-  FOREIGN KEY (user_id) REFERENCES users(id)
-);
-
-CREATE TABLE salaries (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT,
-  salary numeric,
-  FOREIGN KEY (user_id) REFERENCES users(id)
+  photo longtext,
+  address longtext,
+  role ENUM('user', 'admin') DEFAULT 'user'
 );
 
 CREATE TABLE candidate_followup (
@@ -87,6 +30,71 @@ CREATE TABLE candidate_followup (
   cancel_reason VARCHAR(255) null,
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+ALTER TABLE candidate_followup 
+MODIFY COLUMN followup_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+
+CREATE TABLE addresses (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  house_registration_address VARCHAR(100),
+  current_address VARCHAR(100),
+ followup_id INT,
+  FOREIGN KEY (followup_id) REFERENCES candidate_followup(id)
+);
+
+CREATE TABLE positions (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  position_1 VARCHAR(50),
+  position_2 VARCHAR(50),
+  from_date DATE,
+  to_date DATE,
+  reason VARCHAR(100),
+   followup_id INT,
+  FOREIGN KEY (followup_id) REFERENCES candidate_followup(id)
+);
+
+CREATE TABLE contacts (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  contact_person VARCHAR(100),
+  contact_phone_number VARCHAR(20),
+	followup_id INT,
+  FOREIGN KEY (followup_id) REFERENCES candidate_followup(id)
+);
+
+CREATE TABLE education (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  university VARCHAR(100),
+  faculty VARCHAR(100),
+  major VARCHAR(100),
+  year INT,
+  gpa DECIMAL(3,2),
+	followup_id INT,
+  FOREIGN KEY (followup_id) REFERENCES candidate_followup(id)
+);
+
+CREATE TABLE documents (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  transcript LONGTEXT,
+  resume_data LONGTEXT,
+  house_data LONGTEXT,
+idcard_data LONGTEXT,
+  photo_data LONGTEXT,
+  certi_data LONGTEXT,
+  other LONGTEXT,
+	followup_id INT,
+  FOREIGN KEY (followup_id) REFERENCES candidate_followup(id)
+);
+
+CREATE TABLE salaries (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  salary numeric,
+	followup_id INT,
+  FOREIGN KEY (followup_id) REFERENCES candidate_followup(id)
+);
+
+
+
 
 CREATE TABLE CreatePosition (
     PositionID INT PRIMARY KEY AUTO_INCREMENT,
@@ -130,8 +138,8 @@ CREATE TABLE ScheduleInterview (
     InterviewDate DATE NOT NULL,
     StartTime TIME NOT NULL,
     EndTime TIME NOT NULL,
-    UserID INT,
-    FOREIGN KEY (UserID) REFERENCES users(id)
+	followup_id INT,
+  FOREIGN KEY (followup_id) REFERENCES candidate_followup(id)
 );
 
 DELIMITER //
@@ -160,62 +168,7 @@ BEGIN
 END //
 DELIMITER ;
 
-
-
-
-CREATE VIEW user_details AS
-SELECT 
-  users.id, 
-  users.username, 
-  users.password, 
-  users.full_name_th, 
-  users.full_name_eng, 
-  users.id_passport, 
-  users.gender, 
-  users.nationality, 
-  users.date_of_birth, 
-  users.religion, 
-  users.email, 
-  users.phone_number, 
-  users.role, 
-  users.area, 
-  users.areafrom, 
-  users.areato, 
-  addresses.house_registration_address, 
-  addresses.current_address, 
-  positions.position_1, 
-  positions.position_2, 
-  positions.from_date, 
-  positions.to_date, 
-  positions.reason, 
-  contacts.contact_person, 
-  contacts.contact_phone_number, 
-  education.education_level, 
-  education.university, 
-  education.faculty, 
-  education.major, 
-  education.year, 
-  education.gpa, 
-  documents.resume_data, 
-  documents.certi_data, 
-  documents.hr_data, 
-  documents.idcard_data, 
-  documents.photo_data, 
-  salaries.salary, 
-  candidate_followup.status, 
-  candidate_followup.followup_date, 
-  candidate_followup.typeapp, 
-  candidate_followup.notes, 
-  candidate_followup.cancel_reason 
-FROM users 
-LEFT JOIN addresses ON users.id = addresses.user_id 
-LEFT JOIN positions ON users.id = positions.user_id 
-LEFT JOIN contacts ON users.id = contacts.user_id 
-LEFT JOIN education ON users.id = education.user_id 
-LEFT JOIN documents ON users.id = documents.user_id 
-LEFT JOIN salaries ON users.id = salaries.user_id 
-LEFT JOIN candidate_followup ON users.id = candidate_followup.user_id;
-
+DELIMITER //
 CREATE VIEW position_details AS
 SELECT 
     CP.PositionID,
@@ -237,7 +190,7 @@ FROM
     LEFT JOIN NearTransport NT ON CP.PositionID = NT.PositionID
     LEFT JOIN TestAssessmentCriteria TAC ON CP.PositionID = TAC.PositionID
     LEFT JOIN InterviewAssessmentCriteria IAC ON CP.PositionID = IAC.PositionID;
-
+DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE AddPosition(
@@ -280,4 +233,21 @@ BEGIN
 END //
 
 DELIMITER ;
+
+CREATE VIEW candidate_detail AS
+SELECT cf.id, cf.user_id, cf.status, cf.followup_date, cf.typeapp, cf.notes, cf.cancel_reason, 
+       a.house_registration_address, a.current_address, 
+       p.position_1, p.position_2, p.from_date, p.to_date, p.reason,
+       c.contact_person, c.contact_phone_number, 
+       e.university, e.faculty, e.major, e.year, e.gpa, 
+       d.transcript, d.resume_data, d.house_data, d.idcard_data, d.photo_data, d.certi_data, d.other,
+       s.salary
+FROM candidate_followup cf 
+LEFT JOIN addresses a ON cf.id = a.followup_id
+LEFT JOIN positions p ON cf.id = p.followup_id
+LEFT JOIN contacts c ON cf.id = c.followup_id
+LEFT JOIN education e ON cf.id = e.followup_id
+LEFT JOIN documents d ON cf.id = d.followup_id
+LEFT JOIN salaries s ON cf.id = s.followup_id;
+
 
