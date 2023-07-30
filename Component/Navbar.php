@@ -17,37 +17,39 @@
         </div>
 
         <div class="d-flex align-items-center">
-            <a href=" http://localhost:3000/view/followup/followjob/followjob.php" class="text-decoration-none text-reset me-2">username
-                <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="40" />
-            </a>
+            <span><a id="usname" href="http://localhost:3000/view/Profile/myProfile.php" class="text-decoration-none text-reset me-2">username
+            </a> : Is login</span>
         </div>
 
     </div>
+    <script>
+        var username = JSON.parse(localStorage.getItem('user')).username;
+        document.getElementById('usname').innerHTML = username;
+    </script>
 
-
-    <div class="offcanvas offcanvas-start d-flex flex-coumn flex-shrink-0 p-3 bg-light" style="width: 280px;" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-        <div class="offcanvas-header">
-            <div class="input-group rounded">
-                <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                <button id="search-button" type="button" class="btn btn-outline">
-                    <i class="bi bi-search"></i>
-                </button>
-            </div>
-
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
+    <div class="offcanvas offcanvas-start d-flex flex-coumn flex-shrink-0 p-3 bg-light" style="width: 350px;" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-body">
             <div>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     <li class="nav-item">
                         <a href="http://localhost:3000/view/Application/InternApplication.php" class="nav-link align-middle px-0">
-                            <span class="ms-1 d-none d-sm-inline">Application</span>
+                            <span class="h4 ms-1 d-none d-sm-inline">Application</span>
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a href="http://localhost:3000/view/CandidateFollowUp/CandidateFollowMain.php" class="nav-link align-middle px-0">
-                            <span class="ms-1 d-none d-sm-inline">Application Following</span>
+                            <span class="h4 ms-1 d-none d-sm-inline">Application Following</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="http://localhost:3000/view/HRViewList/CandidateList.php" class="nav-link align-middle px-0">
+                            <span class="h4 ms-1 d-none d-sm-inline">HR List</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="http://localhost:3000/" class="nav-link align-middle px-0">
+                            <span class="h4 ms-1 d-none d-sm-inline text-danger">Logout</span>
                         </a>
                     </li>
 

@@ -12,7 +12,7 @@
 
     $id = $_POST['id'];
 
-    $sql = "SELECT * FROM user_details WHERE id= ?";
+    $sql = "SELECT * from candidate_detail LEFT JOIN users ON user_id = users.id WHERE user_id = ?";
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);

@@ -29,10 +29,7 @@
             </div>
 
             <div class="d-flex justify-content-end">
-                <a name="" id="" class="btn btn-outline-primary my-2" href="#" role="button">new apply for internship +</a>
-            </div>
-            <div class="d-flex justify-content-end">
-                <a name="" id="" class="btn btn-outline-primary my-2" href="#" role="button">new apply for job +</a>
+                <a name="" id="" class="btn btn-outline-primary my-2" href="../Application/InternApplication.php" role="button">new apply</a>
             </div>
 
         </div>
@@ -63,7 +60,7 @@
         </div>
         <div class="col-6">
             <h6>Document</h6>
-            <a class="link" id="document">Open document</a>
+            <a class="link" id="document" style="cursor: pointer;" onclick="downloadFiles()">Open document</a>
             <h6>University</h6>
             <p id="university">Thammasat</p>
             <h6>Faculty</h6>
@@ -117,5 +114,6 @@
     </div>
 
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
 
 </html>

@@ -1,18 +1,21 @@
 var AllApps;
+var AllPos= {};
 var CurApps;
 $(document).ready(function () {
-    fetchApplication()
     fetchPositionList()
+    fetchApplication()
 });
 
 function fetchPositionList() {
     $.ajax({
-        url: '../../backend/CandidateFollowup/FetchPositionList.php',
+        url: '../../backend/Application/FetchPositionList.php',
         type: 'GET',
         dataType: 'json', 
         success: function(data) {
-            console.log(data); 
-            // $('#listApps').html(html);
+            data.forEach(element => {
+                AllPos[element.PositionID] = element.PositionName;
+            });
+            console.log(AllPos);
         },
         error: function(e) {
             console.log('There was an error.' + JSON.stringify(e));
@@ -41,10 +44,11 @@ function fetchApplication() {
                 html += '<div class="card my-3 shadow-sm" style="cursor: pointer;" onClick="onSelect(' + i + ')">';
                 html += '<div class="card-body">';
                 html += '<div class="d-flex justify-content-between">';
-                html += '<div class="h6 card-title">' + AllApps[i].position_1 +'/'+AllApps[i].position_2 + '</div>';
-                html += '<div> > </div>';
+                html += '<div class="h6 card-title">' + AllPos[AllApps[i].position_1] +'/'+AllPos[AllApps[i].position_2] + '</div>';
+                html += '<div class="fw-bold" > </div>';
                 html += '</div>';
                 html += '<div class="d-flex justify-content-between">';
+                html += '<div class="card-text fw-bold">[' + AllApps[i].typeapp + ']</div>';
                 html += '<div class="card-text">' + AllApps[i].followup_date + '</div>';
                 html += '<div class="card-text">' + AllApps[i].status + '</div>';
                 html += '</div>';
@@ -65,39 +69,38 @@ function onSelect(index) {
     console.log(CurApps); // Logs the selected card data
 
     // Now, update the application details
-    document.getElementById('position_1').innerText = CurApps.position_1;
-    document.getElementById('position_2').innerText = CurApps.position_2;
-    document.getElementById('period').innerText = CurApps.from_date + " - " + CurApps.to_date;
-    document.getElementById('house_address').innerText = CurApps.house_address;
-    document.getElementById('current_address').innerText = CurApps.current_address;
-    document.getElementById('contact_person').innerText = CurApps.contact_person;
-    document.getElementById('contact_person_number').innerText = CurApps.contact_person_number;
-    document.getElementById('test_result').innerText = CurApps.test_result;
-    document.getElementById('result').innerText = CurApps.result;
+    document.getElementById('position_1').innerText = AllPos[CurApps.position_1] || "-";
+    document.getElementById('position_2').innerText = AllPos[CurApps.position_2] || "-";
+    document.getElementById('period').innerText = (CurApps.from_date + " - " + CurApps.to_date) || "-";
+    document.getElementById('house_address').innerText = CurApps.house_registration_address || "-";
+    document.getElementById('current_address').innerText = CurApps.current_address || "-";
+    document.getElementById('contact_person').innerText = CurApps.contact_person || "-";
+    document.getElementById('contact_person_number').innerText = CurApps.contact_person_number || "-";
+    document.getElementById('test_result').innerText = CurApps.test_result || "-";
+    document.getElementById('result').innerText = CurApps.result || "-";
 
-    // document.getElementById('document').innerText = CurApps.document;
-    document.getElementById('university').innerText = CurApps.university;
-    document.getElementById('faculty').innerText = CurApps.faculty;
-    document.getElementById('major').innerText = CurApps.major;
-    document.getElementById('year').innerText = CurApps.year;
-    document.getElementById('gpa').innerText = CurApps.gpa;
-    document.getElementById('application_reason').innerText = CurApps.reason;
-    document.getElementById('interview_date').innerText = CurApps.interview_date;
-    document.getElementById('interview_result').innerText = CurApps.interview_result;
+    document.getElementById('university').innerText = CurApps.university || "-";
+    document.getElementById('faculty').innerText = CurApps.faculty || "-";
+    document.getElementById('major').innerText = CurApps.major || "-";
+    document.getElementById('year').innerText = CurApps.year || "-";
+    document.getElementById('gpa').innerText = CurApps.gpa || "-";
+    document.getElementById('application_reason').innerText = CurApps.reason || "-";
+    document.getElementById('interview_date').innerText = CurApps.interview_date || "-";
+    document.getElementById('interview_result').innerText = CurApps.interview_result || "-";
 }
 
 
 
 
+
 function cancelApplication() {
-    var userid = localStorage.getItem('userid');
     var cancelReason = $("#cancelReason").val();
 
     $.ajax({
         url: '../../backend/CandidateFollowup/CancelApplication.php',
         type: 'POST',
         data: {
-            userid: userid,
+            userid: CurApps.id,
             status: 'cancel',
             cancel_reason: cancelReason
         },
@@ -110,4 +113,104 @@ function cancelApplication() {
             console.log('There was an error.');
         }
     });
+}
+
+function downloadFiles() {
+    var filesdata = [ 
+        {name: "certi_data", data: CurApps.certi_data}, 
+        {name: "house_data", data: CurApps.house_data}, 
+        {name: "idcard_data", data: CurApps.idcard_data},
+        {name: "photo_data", data: CurApps.photo_data}, 
+        {name: "resume_data", data: CurApps.resume_data},
+        {name: "transcript", data: CurApps.transcript}, 
+        {name: "other", data: CurApps.other} 
+    ];
+    
+    var zip = new JSZip();
+    
+    filesdata.forEach((file, index) => {
+        // Skip if data is null
+        if (file.data === null) {
+            return;
+        }
+    
+        var block = file.data.split(";");
+        var contentType = block[0].split(":")[1];
+        var realData = block[1].split(",")[1];
+    
+        var blob = b64toBlob(realData, contentType);
+    
+        // Map the content type to an extension
+        var extension = getExtension(contentType);
+    
+        // Use the name from the filedata array for the filename and append the extension
+        zip.file(`${file.name}.${extension}`, blob, { binary: true });
+    });
+    
+    zip.generateAsync({ type: "blob" }).then(function(content) {
+        // Create a link element
+        var a = document.createElement("a");
+    
+        // Create a URL for the blob
+        var url = URL.createObjectURL(content);
+        a.href = url;
+        a.download = "files.zip";
+        document.body.appendChild(a);
+    
+        // Simulate a click
+        a.click();
+    
+        // Remove the link when done
+        document.body.removeChild(a);
+    });
+    
+    // Map MIME types to file extensions
+    function getExtension(contentType) {
+        var extensions = {
+            "image/jpeg": "jpg",
+            "image/jpeg": "jpeg",
+            "image/gif": "gif",
+            "image/png": "png",
+            "application/pdf": "pdf",
+            "application/msword": "doc",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx",
+            "application/vnd.ms-excel": "xls",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": "xlsx",
+            "application/vnd.ms-powerpoint": "ppt",
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation": "pptx",
+            "text/plain": "txt",
+            "application/zip": "zip"
+
+        };
+    
+        return extensions[contentType];
+    }
+    
+    
+}
+
+
+
+function b64toBlob(b64Data, contentType, sliceSize) {
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        var byteArray = new Uint8Array(byteNumbers);
+
+        byteArrays.push(byteArray);
+    }
+
+    var blob = new Blob(byteArrays, {type: contentType});
+    return blob;
 }

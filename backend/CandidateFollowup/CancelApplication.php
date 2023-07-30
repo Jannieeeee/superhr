@@ -11,7 +11,7 @@ $cancel_reason = $_POST['cancel_reason']; // get cancel reason from AJAX post
 // create database connection
 $conn = new mysqli($db_host, $db_user, $db_password, $db_name);
 
-$sql = "UPDATE candidate_followup SET status = ?, cancel_reason = ? WHERE user_id = ?";
+$sql = "UPDATE candidate_followup SET status = ?, cancel_reason = ? WHERE id = ?";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ssi", $status, $cancel_reason, $userid); // bind parameters to the query
