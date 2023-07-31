@@ -4,39 +4,22 @@ select * from  candidate_followup;
 select * from users;
 select * from education;
 
-SELECT * FROM user_details;
 
-SELECT users.*, positions.position_1 ,candidate_followup.*
-    FROM users 
-     JOIN positions ON users.id = positions.user_id 
-    JOIN candidate_followup ON users.id = candidate_followup.user_id ;
+UPDATE candidate_followup
+SET status = 'test'
+WHERE id = 1;
 
-SELECT *
-    FROM users 
-	JOIN positions
-    ON users.id = positions.user_id
-    JOIN candidate_followup
-    ON users.id = candidate_followup.user_id;
+
     
-    
-    
-    SELECT * 
-FROM users 
-LEFT JOIN addresses ON users.id = addresses.user_id
-LEFT JOIN positions ON users.id = positions.user_id
-LEFT JOIN contacts ON users.id = contacts.user_id
-LEFT JOIN education ON users.id = education.user_id
-LEFT JOIN documents ON users.id = documents.user_id
-LEFT JOIN salaries ON users.id = salaries.user_id
-LEFT JOIN candidate_followup ON users.id = candidate_followup.user_id;
+select * from followup_test_questions;
+select * from CreatePosition;
 
 
 select * from users;
 select * from positions;
 select * from candidate_followup;
 
-
-    
+SELECT * FROM candidate_detail LEFT JOIN followup_test_questions ft ON ft.followup_id = id WHERE  status != 'cancel';
     
 select * from createPosition;
 select * from NearTransport;
@@ -44,4 +27,15 @@ select * from TestAssessmentCriteria;
 select * from InterviewAssessmentCriteria;
 
 select * from  candidate_followup;
+
+SET SQL_SAFE_UPDATES = 0;
+UPDATE candidate_followup
+SET status = 'new'
+WHERE status  = "fail";
+
+SELECT * FROM ScheduleInterview;
+
+select * from candidate_detail LEFT JOIN users ON user_id = users.id;
+
 select * from candidate_detail;
+select * from testjob tj left join followup_test_questions ft on ft.followup_id = tj.followup_id;

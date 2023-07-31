@@ -14,11 +14,10 @@ $locationLink = $_POST['locationLink'];
 $interdate = $_POST['interdate'];
 $intersttime = $_POST['intersttime'];
 $interentime = $_POST['interentime'];
-$UserID = $_POST['cid'];
- 
+$followup_id = $_POST['cid'];
 
-$stmt = $conn->prepare("CALL InsertScheduleInterview(?, ?, ?, ?, ?)");
-$stmt->bind_param("ssssi", $LocationLink, $InterviewDate, $StartTime, $EndTime, $UserID);
+$stmt = $conn->prepare("INSERT INTO ScheduleInterview (LocationLink, InterviewDate, StartTime, EndTime, followup_id) VALUES (?, ?, ?, ?, ?)");
+$stmt->bind_param("ssssi", $locationLink, $interdate, $intersttime, $interentime, $followup_id);
 
 if ($stmt->execute()) {
     echo "New record created successfully";
@@ -28,5 +27,4 @@ if ($stmt->execute()) {
 
 $stmt->close();
 $conn->close();
-
 ?>

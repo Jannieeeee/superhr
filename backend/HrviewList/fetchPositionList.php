@@ -17,24 +17,23 @@ $sql = "SELECT PositionID, PositionName FROM CreatePosition";
 
 $result = $conn->query($sql);
 
+$positions = []; 
+
 if ($result->num_rows > 0) {
   // Output data of each row
-  $positions = [];
   while($row = $result->fetch_assoc()) {
-    $positions[$row['PositionID']] = $row['PositionName'];
+    $positions[] = array(
+        "id" => $row['PositionID'], 
+        "name" => $row['PositionName']
+    );
   }
-  
-  // Set the header information for the response
-  header('Content-Type: application/json');
+} 
 
-  // Convert the positions array into a JSON string and echo it
-  echo json_encode($positions);
-} else {
-  // Set the header information for the response
-  header('Content-Type: application/json');
+// Set the header information for the response
+header('Content-Type: application/json');
 
-  echo json_encode([]); // If no positions are found, an empty JSON object is returned
-}
+// Convert the positions array into a JSON string and echo it
+echo json_encode($positions);
 
 $conn->close();
 ?>

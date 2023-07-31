@@ -39,7 +39,7 @@
 
   </div>
 
-  <div class="container mt-5 mb-2">
+  <div class="container mt-2 mb-2">
     <h2 class="fw-bolder mb-4">Personal Information</h2>
     <div class="d-flex justify-content-end">
       <div class="btn-group">
@@ -66,9 +66,6 @@
           </div>
           <div class="col-sm-3">
             <h6><i class="bi bi-telephone-fill" style="color: #444DDA;"></i> <span id="tel">xxx-xxx-xxxx</span></h6>
-          </div>
-          <div class="col-sm-3">
-            <h6><i class="bi bi-file-earmark"></i><a onclick="dowloadfile()" class="text-decoration-none"> document</a> </h6>
           </div>
         </div>
       </div>

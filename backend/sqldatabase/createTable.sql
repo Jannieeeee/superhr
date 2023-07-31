@@ -30,6 +30,9 @@ CREATE TABLE candidate_followup (
   cancel_reason VARCHAR(255) null,
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
+ALTER TABLE candidate_followup
+ADD COLUMN isTest TINYINT NOT NULL DEFAULT 0;
+
 
 ALTER TABLE candidate_followup 
 MODIFY COLUMN followup_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
@@ -92,6 +95,23 @@ CREATE TABLE salaries (
 	followup_id INT,
   FOREIGN KEY (followup_id) REFERENCES candidate_followup(id)
 );
+
+DROP TABLE IF EXISTS testjob;
+CREATE TABLE testjob (
+	testid INT AUTO_INCREMENT PRIMARY KEY,
+	ansfile1 LONGTEXT,
+	ansfile2 LONGTEXT,
+    link1 VARCHAR(300),
+    link2 VARCHAR(300),
+    res1 VARCHAR(100),
+    res2 VARCHAR(100),
+    testdate TIMESTAMP,
+	followup_id INT,
+	FOREIGN KEY (followup_id) REFERENCES candidate_followup(id)
+);
+ALTER TABLE testjob 
+MODIFY COLUMN testdate TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
 
 
 
@@ -234,8 +254,8 @@ END //
 
 DELIMITER ;
 
-CREATE VIEW candidate_detail AS
-SELECT cf.id, cf.user_id, cf.status, cf.followup_date, cf.typeapp, cf.notes, cf.cancel_reason, 
+CREATE OR REPLACE VIEW candidate_detail AS
+SELECT cf.id, cf.user_id, cf.status, cf.followup_date, cf.typeapp, cf.notes, cf.cancel_reason, cf.isTest,
        a.house_registration_address, a.current_address, 
        p.position_1, p.position_2, p.from_date, p.to_date, p.reason,
        c.contact_person, c.contact_phone_number, 
@@ -249,5 +269,20 @@ LEFT JOIN contacts c ON cf.id = c.followup_id
 LEFT JOIN education e ON cf.id = e.followup_id
 LEFT JOIN documents d ON cf.id = d.followup_id
 LEFT JOIN salaries s ON cf.id = s.followup_id;
+
+
+
+CREATE OR REPLACE  VIEW followup_test_questions AS
+SELECT 
+    p.followup_id, 
+    cp1.TestQuestion AS TestQuestionPos1,
+    cp2.TestQuestion AS TestQuestionPos2
+FROM 
+    positions p
+LEFT JOIN 
+    CreatePosition cp1 ON p.position_1 = cp1.PositionID
+LEFT JOIN 
+    CreatePosition cp2 ON p.position_2 = cp2.PositionID;
+
 
 

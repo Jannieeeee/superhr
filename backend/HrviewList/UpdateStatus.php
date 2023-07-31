@@ -13,7 +13,7 @@
     $userId = $_POST['userId'];
     $status = $_POST['status'];
 
-    $sql = "UPDATE candidate_followup SET status=? WHERE user_id=?";
+    $sql = "UPDATE candidate_followup SET status=? WHERE id=?";
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("si", $status, $userId);

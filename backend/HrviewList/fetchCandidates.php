@@ -15,7 +15,13 @@ $statuses = isset($_POST['status']) ? $_POST['status'] : [];
 $fullNameTh = $_POST['full_name_th'] ?? null;
 $fullNameEn = $_POST['full_name_en'] ?? null;
 
-$sql = "SELECT * FROM candidate_detail LEFT JOIN users ON user_id = users.id WHERE 1=1"; 
+$sql = "SELECT candidate_detail.*, users.*, candidate_detail.id as caid,
+        interview_data.* 
+        FROM candidate_detail 
+        LEFT JOIN users ON user_id = users.id 
+        LEFT JOIN (SELECT * FROM ScheduleInterview) AS interview_data ON candidate_detail.id = interview_data.followup_id 
+        WHERE 1=1";
+
 $params = [];
 $types = '';
 $debugParams = [];
@@ -61,31 +67,23 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param($types, ...$params);
 $stmt->execute();
 $result = $stmt->get_result();
-
+$rows = [];
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        echo '
-        <div class="userlist " data-id="' . $row['user_id'] . '" style="cursor: pointer;">
-            <div class="mb-2 shadow-lg" >
-                    <div class="p-1 px-2 text-white text-end fw-bold " style=" background: #CB0021; border-radius: 10px 10px 0 0;">'
-                        . $row['status'] .
-                    '</div>
-                    <div class="row mt-1">
-                        <div class="col-4 d-flex justify-content-center">
-                            <div class="">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" width="50" height="50" class="rounded-circle">
-                            </div>
-                        </div>
-                        <div class="col-8">
-                            <p class="">'.$row['full_name_th'].' - ' . $row['full_name_eng'] . '</p>
-                            <p class="">' . $row['position_1'] . '</p>
-                        </div>
-                    </div>
-            </div>
-        </div>
-            ';
+        // Check if the candidate has interview data
+        $hasInterview = !empty($row['InterviewID']);
+
+        // Remove the InterviewID field if the candidate does not have interview data
+        if (!$hasInterview) {
+            unset($row['InterviewID']);
+        }
+
+        // Include the candidate data in the response
+        $rows[] = $row;
     }
-} else {
-    echo "0 results";
 }
+
+// Returns the data as JSON
+header('Content-Type: application/json');
+echo json_encode($rows);
 ?>

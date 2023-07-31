@@ -4,12 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="style.css">
-    <script defer src="script.js"></script>
-    <script defer src="scriptmore.js"></script>
     <title>Candidate List</title>
 </head>
 
@@ -63,6 +61,7 @@ require_once '../../Component/Navbar.php';
             <div id="candidates">
             </div>
         </div>
+
         <div id="blockcontent" class="col-8 ">
             <div class="shadow-lg p-4 rounded">
                 <div class="row">
@@ -79,7 +78,7 @@ require_once '../../Component/Navbar.php';
                                 </span>
                                 <span class="mb-4 h5" id="efullname">
                                     xxxxxx xxxxx
-                                </span>
+                                </span>[<span id="status"> </span>]
                             <p>
                             <p>
                                 <span class="h6" id="cpos1">UX/UI</span> -
@@ -90,12 +89,12 @@ require_once '../../Component/Navbar.php';
                     <div class="col-sm-4">
                         <div class="row mb-4">
                             <div class="col-sm-4">
-                                <button class="btn btn-outline-primary" style="color: #444DDA; border: 1px solid #444DDA;" onclick="DeclineFunct()">Deline</button>
+                                <button id="btndc" class="btn btn-outline-primary" style="color: #444DDA; border: 1px solid #444DDA;" onclick="DeclineFunct()">Deline</button>
                             </div>
 
                             <div class="col-sm-5">
 
-                                <button id="btn1" onclick="btnAction()" class="btn btn-primary d-block" style="background-color: #444DDA; border: 1px solid #444DDA;">Short-list</button>
+                                <button id="btn1" onclick="ChangeStatusBtn()" class="btn btn-primary d-block" style="background-color: #444DDA; border: 1px solid #444DDA;">Short-list</button>
                             </div>
                         </div>
                     </div>
@@ -114,7 +113,7 @@ require_once '../../Component/Navbar.php';
                     </div>
                     <div class="col-sm-3">
                         <h6><i class="bi bi-file-earmark"></i>
-                            <a style="cursor: pointer;" onclick="dowloadfiles()" class="text-decoration-none"> document</a>
+                            <a style="cursor: pointer;" onclick="downloadFiles()" class="text-decoration-none"> document</a>
                         </h6>
                     </div>
                 </div>
@@ -125,15 +124,16 @@ require_once '../../Component/Navbar.php';
                             <a class="nav-link active" id="pills-html-tab" data-bs-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-html" aria-selected="true">Information</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="pills-css-tab" data-bs-toggle="pill" href="#pills-test" role="tab" aria-controls="pills-css" aria-selected="false">Test Result</a>
+                            <a class="nav-link nv1" id="pills-css-tab" data-bs-toggle="pill" href="#pills-test" role="tab" aria-controls="pills-css" aria-selected="false">Test Result</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="pills-js-tab" data-bs-toggle="pill" href="#pills-interview" role="tab" aria-controls="pills-js" aria-selected="false">Interview</a>
+                            <a class="nav-link nv2" id="pills-js-tab" data-bs-toggle="pill" href="#pills-interview" role="tab" aria-controls="pills-js" aria-selected="false">Interview</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="pills-js-tab" data-bs-toggle="pill" href="#pills-contract" role="tab" aria-controls="pills-js" aria-selected="false">Contract</a>
+                            <a class="nav-link nv3" id="pills-js-tab" data-bs-toggle="pill" href="#pills-contract" role="tab" aria-controls="pills-js" aria-selected="false">Contract</a>
                         </li>
                     </ul>
+
                     <div class="tab-content" id="pills-tabContent">
                         <!-- Info tab -->
                         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-html-tab">
@@ -222,7 +222,28 @@ require_once '../../Component/Navbar.php';
 
                         <!-- Test result -->
                         <div class="tab-pane fade" id="pills-test" role="tabpanel" aria-labelledby="pills-css-tab">
+                            <h4>Test Result</h4>
+                            <hr class="my-4">
 
+                            <div>
+                                <h5>Postion 1</h5>
+                                <p> <span class="text-secondary">Test Question : </span><br> <span id="testquestion1"></span></p>
+                                <p> <span class="text-secondary">Test Submited : </span><br> <button onclick="LoadFile1()" class="btn btn-primary">Download</button></p>
+                                <p> <span class="text-secondary">Link : </span> <br> <a class="link-primary" href="" id="link1"></a></p>
+                                <div id="c1" class="shadow-sm p-2 rounded">
+
+                                </div>
+
+                                <h5 class="mt-3">Postion 2</h5>
+                                <p> <span class="text-secondary">Test Question : </span><br> <span id="testquestion2"></span></p>
+                                <p> <span class="text-secondary">Test Submited : </span><br> <button onclick="LoadFile2()" class="btn btn-primary">Download</button></p>
+                                <p> <span class="text-secondary">Link : </span><br> <a class="link-primary" href="" id="link2"></a></p>
+                                
+                                <div id="c2" class="shadow-sm p-2 rounded">
+
+                                </div>
+
+                            </div>
                         </div>
 
                         <!-- Interview -->
@@ -253,11 +274,10 @@ require_once '../../Component/Navbar.php';
                                     <input type="time" name="interentime" id="interentime" class="form-control">
                                 </div>
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <button class="btn btn-primary" type="submit" style="background-color: #444DDA;">Send inviation</button>
+                                    <button class="btn btn-primary" onclick="ScheduleInterview()" style="background-color: #444DDA;">Send inviation</button>
                                 </div>
                             </div>
                         </div>
-
 
                         <!-- Contract -->
                         <div class="tab-pane fade" id="pills-contract" role="tabpanel" aria-labelledby="pills-js-tab">
@@ -307,27 +327,13 @@ require_once '../../Component/Navbar.php';
                                             <input type="date" name="con" class="form-control">
                                         </div>
                                     </div>
-
-                                    <div class="row mb-3">
-                                        <div class="col-sm-6">
-                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                                Extendable
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                                Renewable
-                                            </label>
-                                        </div>
-                                    </div>
                                     <div class="d-grid gap-3 d-md-flex justify-content-md-end">
                                         <a href="#pills-contract1" class="btn btn-primary" role="button" style="background-color: #444DDA;">save</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
                 </div>
@@ -355,5 +361,10 @@ require_once '../../Component/Navbar.php';
     </div>
 
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
+
+<script defer src="script.js"></script>
+<script defer src="scriptmore.js"></script>
+<script defer src="helper.js"></script>
 
 </html>

@@ -27,10 +27,10 @@
         document.getElementById('usname').innerHTML = username;
     </script>
 
-    <div class="offcanvas offcanvas-start d-flex flex-coumn flex-shrink-0 p-3 bg-light" style="width: 350px;" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas offcanvas-start d-flex  flex-shrink-0 p-3 bg-light" style="width: 350px;" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-body">
             <div>
-                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
                     <li class="nav-item">
                         <a href="http://localhost:3000/view/Application/InternApplication.php" class="nav-link align-middle px-0">
                             <span class="h4 ms-1 d-none d-sm-inline">Application</span>
@@ -43,11 +43,30 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="http://localhost:3000/view/Profile/myProfile.php" class="nav-link align-middle px-0">
+                            <span class="h4 ms-1 d-none d-sm-inline text-success"> My Profile</span>
+                        </a>
+                    </li>
+                    <hr class="bi-hr w-100">
+
+                    <li class="nav-item">
                         <a href="http://localhost:3000/view/HRViewList/CandidateList.php" class="nav-link align-middle px-0">
                             <span class="h4 ms-1 d-none d-sm-inline">HR List</span>
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="http://localhost:3000/view/CreateJobPosition/select.php" class="nav-link align-middle px-0">
+                            <span class="h4 ms-1 d-none d-sm-inline">Create Position</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="http://localhost:3000/view/JobManagement/job.php" class="nav-link align-middle px-0">
+                            <span class="h4 ms-1 d-none d-sm-inline">Position Manageer</span>
+                        </a>
+                    </li>
+                    <hr class="bi-hr w-100">
+                    
+                    <li class="nav-item ali">
                         <a href="http://localhost:3000/" class="nav-link align-middle px-0">
                             <span class="h4 ms-1 d-none d-sm-inline text-danger">Logout</span>
                         </a>

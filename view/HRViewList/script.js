@@ -1,8 +1,10 @@
+var allPositions;
+
 
 $(document).ready(function () {
+    FetchPositionList();
     toggleDiv(true);
     fetchCandidates();
-    FetchPositionList();
     addStatusChoice();
 });
 
@@ -52,20 +54,21 @@ function addStatusChoice() {
 
 
 var currentID = 0;
-var currentStatus;
 $(document).ready(function () {
     $(document).on("click", ".userlist", function () {
         toggleDiv(false);
         var id = $(this).data("id");
-        FetchFulldata(id);
         currentID = id;
-        StatusManagement();
+        FetchFulldata(id);
     });
 
 
 
 
 });
+
+var allCandidates;
+
 function fetchCandidates() {
     let positions = [];
     $(".dropdown-menu input[type=checkbox]:checked").each(function () {
@@ -90,130 +93,46 @@ function fetchCandidates() {
             status: statuses
         },
         success: function (data) {
-            $('#candidates').html(data);
+            allCandidates = data;
+            console.log(data);
+            let html = '';
+
+            console.log(data);
+            for (let user of data) {
+                var p1 = allPositions.find(position => position.id == user.position_1);
+                var p2 = allPositions.find(position => position.id == user.position_2);
+                html += `
+                <div class="userlist" data-id="${user.caid}" style="cursor: pointer;">
+                    <div class="mb-2 shadow-sm" >
+                    <div class="p-4">
+                        <div class="p-1 px-2 text-white text-end fw-bold" style="background: #CB0021; border-radius: 10px 10px 0 0;">${user.status}</div>
+                        <div class="row mt-1">
+                            <div class="col-3 d-flex justify-content-center">
+                                <div class="">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" width="50" height="50" class="rounded-circle">
+                                </div>
+                            </div>
+                            <div class="col-9">
+                                <p class="">${user.full_name_th} - ${user.full_name_eng}</p>
+                                <div class="d-flex justify-content-start-50 gap-2">
+                                <div class="">${p1.name}</div>/
+                                <div class="">${p2.name}</div>
+                                <div class="">${(user.isTest ? "Tested" : "") || ""}</div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>`;
+            }
+            $('#candidates').html(html);
+
         },
         error: function () {
             console.log('There was an error.');
         }
     });
 }
-
-function search() {
-    fetchCandidates()
-}
-
-function FetchPositionList() {
-    $.ajax({
-        url: '../../backend/HrviewList/fetchPositionList.php',
-        type: 'GET',
-        dataType: 'json',
-        success: function (data) {
-            $('#searchPos').empty();
-
-            $.each(data, function (key, position) {
-                $('#searchPos').append('<label class="dropdown-item w-100"><input type="checkbox" value="' + position + '">' + position + '</label>');
-            });
-        },
-        error: function () {
-            console.log('There was an error.');
-        }
-    });
-}
-
-function FetchFulldata(id) {
-
-    $.ajax({
-        url: '../../backend/HrviewList/fetchFulldata.php',
-        type: 'POST',
-        data: {
-            id: id
-        },
-        success: function (data) {
-            var parsedData = JSON.parse(data);
-            console.log(parsedData);
-
-            $('#username').text(parsedData.username);
-            $('#password').text(parsedData.password);
-            $('#tfullname').text(parsedData.full_name_th);
-            $('#efullname').text(parsedData.full_name_eng);
-            $('#area').text(parsedData.area);
-            $('#areaFrom').text(parsedData.areafrom);
-            $('#areaTo').text(parsedData.areato);
-            $('#cancelReason').text(parsedData.cancel_reason);
-            $('#certiData').text(parsedData.certi_data);
-            $('#contactPerson').text(parsedData.contact_person);
-            $('#cphone').text(parsedData.contact_phone_number);
-            $('#currentAddress').text(parsedData.current_address);
-            $('#bd').text(parsedData.date_of_birth);
-            $('#educationLevel').text(parsedData.education_level);
-            $('#cmail').text(parsedData.email);
-            $('#facu').text(parsedData.faculty);
-            $('#followupDate').text(parsedData.followup_date);
-            $('#fromDate').text(parsedData.from_date);
-            $('#gd').text(parsedData.gender);
-            $('#gpa').text(parsedData.gpa);
-            $('#cads').text(parsedData.house_registration_address);
-            $('#hrData').text(parsedData.hr_data);
-            $('#id').text(parsedData.id);
-            $('#pid').text(parsedData.id_passport);
-            $('#pidc').text(parsedData.idcard_data);
-            $('#maj').text(parsedData.major);
-            $('#ntl').text(parsedData.nationality);
-            $('#notes').text(parsedData.notes);
-            $('#phoneNumber').text(parsedData.phone_number);
-            $('#photoData').text(parsedData.photo_data);
-            $('#cpos1').text(parsedData.position_1);
-            $('#cpos2').text(parsedData.position_2);
-            $('#reason').text(parsedData.reason);
-            $('#rlg').text(parsedData.religion);
-            $('#resumeData').text(parsedData.resume_data);
-            $('#role').text(parsedData.role);
-            $('#salary').text(parsedData.salary);
-            $('#status').text(parsedData.status);
-            $('#toDate').text(parsedData.to_date);
-            $('#typeapp').text(parsedData.typeapp);
-            $('#uni').text(parsedData.university);
-            $('#yrs').text(parsedData.year);
-
-            $('#ag').text("20");
-            currentStatus = parsedData.status;
-            updateButton();
-
-        },
-
-
-        error: function () {
-            console.log('There was an error.');
-        }
-    });
-}
-
-
-function ScheduleInterview() {
-    var locationLink = $('#locationLink').val();
-    var interdate = $('#interdate').val();
-    var intersttime = $('#intersttime').val();
-    var interentime = $('#interentime').val();
-
-    $.ajax({
-        url: '../../backend/HrviewList/AddSc.php',
-        type: 'POST',
-        data: {
-            locationLink: locationLink,
-            interdate: interdate,
-            intersttime: intersttime,
-            interentime: interentime,
-            cid: currentID
-        },
-        success: function (response) {
-            alert('Interview schedule has been added successfully');
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            alert('An error occurred: ' + textStatus + ' ' + errorThrown);
-        }
-    });
-}
-
 
 function updateStatus(userId, status) {
     $.ajax({
@@ -224,8 +143,8 @@ function updateStatus(userId, status) {
             status: status
         },
         success: function (response) {
-            console.log('Status has been updated successfully');
-            // alert('Status has been updated successfully');
+            console.log(response);
+            alert('Status has been updated successfully');
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log('An error occurred: ' + textStatus + ' ' + errorThrown);
@@ -234,43 +153,265 @@ function updateStatus(userId, status) {
     });
 }
 
+function search() {
+    fetchCandidates()
+}
 
-function DeclineFunct() {
-    // Show the confirmation modal
-    var confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
-    confirmationModal.show();
+async function FetchPositionList() {
+    await
+        $.ajax({
+            url: '../../backend/HrviewList/fetchPositionList.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                allPositions = data;
+                $('#searchPos').empty();
+                $.each(data, function (id, position) {
+                    $('#searchPos').append('<label class="dropdown-item w-100"><input type="checkbox" value="' + position.id + '">' + position.name + '</label>');
+                });
+            },
+            error: function () {
+                console.log('There was an error.');
+            }
+        });
+}
+var selectCandidate;
+function FetchFulldata(id) {
+    selectCandidate = allCandidates.find(candidate => candidate.caid == id);
+    console.log(selectCandidate);
+    ChangeStatus();
 
-    // When the "Yes, Decline" button is clicked, update the status to "fail"
-    document.getElementById('confirmDeclineButton').addEventListener('click', function () {
-        updateStatus(currentID, 'fail');
-        confirmationModal.hide();
-        location.reload();
+    $('#username').text(selectCandidate.username);
+    $('#password').text(selectCandidate.password);
+    $('#tfullname').text(selectCandidate.full_name_th);
+    $('#efullname').text(selectCandidate.full_name_eng);
+    $('#cphone').text(selectCandidate.contact_phone_number);
+    $('#currentAddress').text(selectCandidate.current_address);
+    $('#cads').text(selectCandidate.house_registration_address);
+    $('#bd').text(selectCandidate.date_of_birth);
+    $('#cmail').text(selectCandidate.email);
+    $('#facu').text(selectCandidate.faculty);
+    $('#major').text(selectCandidate.major);
+    $('#gpa').text(selectCandidate.gpa);
+    $('#uni').text(selectCandidate.university);
+    $('#followupDate').text(selectCandidate.followup_date);
+    $('#fromDate').text(selectCandidate.from_date);
+
+    $('#id').text(selectCandidate.id);
+    $('#pid').text(selectCandidate.id_passport);
+    $('#pidc').text(selectCandidate.id_citizen);
+    $('#ntl').text(selectCandidate.nationality);
+    $('#notes').text(selectCandidate.notes);
+    $('#phoneNumber').text(selectCandidate.phone_number);
+    $('#photoData').text(selectCandidate.photo_data);
+    var pos1name = allPositions.find(position => position.id == selectCandidate.position_1);
+    var pos2name = allPositions.find(position => position.id == selectCandidate.position_2);
+    $('#cpos1').text(pos1name.name);
+    $('#cpos2').text(pos2name.name);
+    $('#reason').text(selectCandidate.reason);
+    $('#rlg').text(selectCandidate.religion);
+    $('#role').text(selectCandidate.role);
+    $('#salary').text(selectCandidate.salary);
+    $('#status').text(selectCandidate.status);
+    $('#toDate').text(selectCandidate.to_date);
+    $('#typeapp').text(selectCandidate.typeapp);
+    $('#yrs').text(selectCandidate.year);
+    var age = Date.now() - new Date(selectCandidate.date_of_birth);
+    var age_in_years = age / (365.25 * 24 * 60 * 60 * 1000);
+    var rounded_age = Math.round(age_in_years);
+
+    $('#ag').text(rounded_age);
+
+}
+
+
+var file1str;
+var file2str;
+
+function FetchTestData(id) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "../../backend/HrviewList/FetchQuestion.php?id=" + id, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var res = JSON.parse(xhr.responseText);
+                console.log(res)
+                document.getElementById("testquestion1").innerHTML = res[0].TestQuestionPos1 || "-";
+                document.getElementById("testquestion2").innerHTML = res[0].TestQuestionPos2 || "-";
+                document.getElementById("link1").innerHTML = res[0].link1 || "-";
+                document.getElementById("link2").innerHTML = res[0].link2 || "-";
+                document.getElementById("link1").href = res[0].link1 || "#";
+                document.getElementById("link2").href = res[0].link2 || "#";
+                file1str = res[0].ansfile1;
+                file2str = res[0].ansfile2;
+
+
+            } else {
+                console.error("Error occurred while fetching data.");
+            }
+        }
+    };
+    xhr.send();
+
+}
+
+
+var testcs;
+function FetchTestC(id) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "../../backend/HrviewList/FetchTestC.php?id=" + id, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var res = JSON.parse(xhr.responseText);
+                testcs = res
+                var html = `<h5 class="text-secondary"> Test Criteria : </h5>`;
+                
+                testcs.forEach(element => {
+                    if (element.PositionID == selectCandidate.position_1) {
+                        html += `
+                        <div>
+                        <p class="fw-bold mb-2">${element.Criteria}</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="evaluation_${element.CriteriaID}" value="2" id="pass_${element.CriteriaID}">
+                            <label class="form-check-label" for="pass_${element.CriteriaID}">Pass</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="evaluation_${element.CriteriaID}" value="1" id="fail_${element.CriteriaID}">
+                            <label class="form-check-label" for="fail_${element.CriteriaID}">Fail</label>
+                        </div>
+                        <div class="form-check">
+                            <input checked class="form-check-input" type="radio" name="evaluation_${element.CriteriaID}" value="0" id="notEvaluated_${element.CriteriaID}">
+                            <label class="form-check-label" for="notEvaluated_${element.CriteriaID}">Not Evaluated</label>
+                        </div>
+                    </div>
+                    
+                        `
+                    }
+                });
+                html += '<button class="btn btn-success" onclick="savet1()">Save</button>';
+                document.getElementById("c1").innerHTML = html;
+                
+                html = `<h5 class="text-secondary"> Test Criteria : </h5>`;
+                testcs.forEach(element => {
+                    if (element.PositionID == selectCandidate.position_2) {
+                        html += `
+                        <div>
+                        <p class="fw-bold mb-2">${element.Criteria}</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="evaluation_${element.CriteriaID}" value="2" id="pass_${element.CriteriaID}">
+                            <label class="form-check-label" for="pass_${element.CriteriaID}">Pass</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="evaluation_${element.CriteriaID}" value="1" id="fail_${element.CriteriaID}">
+                            <label class="form-check-label" for="fail_${element.CriteriaID}">Fail</label>
+                        </div>
+                        <div class="form-check">
+                            <input checked class="form-check-input" type="radio" name="evaluation_${element.CriteriaID}" value="0" id="notEvaluated_${element.CriteriaID}">
+                            <label class="form-check-label" for="notEvaluated_${element.CriteriaID}">Not Evaluated</label>
+                        </div>
+                    </div>
+                    
+                        `
+                    }
+                });
+                html += '<button class="btn btn-success" onclick="savet2()">Save</button>';
+
+                document.getElementById("c2").innerHTML = html;
+
+
+            } else {
+                console.error("Error occurred while fetching data.");
+            }
+        }
+    };
+    xhr.send();
+
+}
+var intercs;
+function FetchInterC(id) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "../../backend/HrviewList/FetchInterC.php?id=" + id, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var res = JSON.parse(xhr.responseText);
+                intercs = res;
+
+            } else {
+                console.error("Error occurred while fetching data.");
+            }
+        }
+    };
+    xhr.send();
+
+}
+
+function savet1() {
+    var evaluations = {};
+    var valueString = '';
+    testcs.forEach(element => {
+        if (element.PositionID == selectCandidate.position_1) {
+            var radios = document.getElementsByName(`evaluation_${element.CriteriaID}`);
+            radios.forEach(radio => {
+                if (radio.checked) {
+                    evaluations[element.CriteriaID] = radio.value;
+                    valueString += radio.value; 
+                }
+            });
+        }
+    });
+    valueString += Object.keys(evaluations).length;  
+    updateTable('testjob', 'followup_id', selectCandidate.caid, 'res1', valueString);
+
+    return false;
+}
+
+function savet2() {
+    var evaluations = {};
+    var valueString = '';
+    testcs.forEach(element => {
+        if (element.PositionID == selectCandidate.position_2) {
+            var radios = document.getElementsByName(`evaluation_${element.CriteriaID}`);
+            radios.forEach(radio => {
+                if (radio.checked) {
+                    evaluations[element.CriteriaID] = radio.value;
+                    valueString += radio.value; 
+                }
+            });
+        }
+    });
+    valueString += Object.keys(evaluations).length;  
+    updateTable('testjob', 'followup_id', selectCandidate.caid, 'res2', valueString);
+
+    return false;
+}
+
+
+function updateTable(table,idname, id, field, value) {
+    const data = {
+        table: table,
+        idname: idname,
+        id: id,
+        field: field,
+        value: value
+    };
+
+    fetch('../../backend/HrviewList/UpdateTable.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message);
+        }
+    })
+    .catch((error) => {
+        alert('Error:', error);
     });
 }
 
-// TODO Check test
-var isTest = false
-function StatusManagement() {
-    if (currentStatus == "new") {
-        updateStatus(id, "pre_screen");
-        updateButton();
-    } else if (isTest && currentStatus == "test") {
-        $("#btn1").text("Interview");
-    }
-}
-
-function updateButton() {
-    if (currentStatus === "pre_screen") {
-        $("#btn1").text("Test");
-    }
-}
-
-function btnAction() {
-    var btnState = document.getElementById("btn1").innerHTML;
-    if (btnState == "Short-list") {
-        updateStatus(currentID, "test");
-    } else if (btnState == "Test") {
-        updateStatus(id, "test");
-        StatusManagement();
-    }
-}
