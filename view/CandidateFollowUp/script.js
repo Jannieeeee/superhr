@@ -64,12 +64,15 @@ function fetchApplication() {
     });
 }
 
+var interdata;
+
 function onSelect(index) {
     CurApps = AllApps[index];
     console.log(CurApps);
     if (CurApps.status == "short_list" && (CurApps.testid == null)) {
         document.getElementById("testbtn").disabled = false;
     } else if (CurApps.status == "interviewed" && (CurApps.isInter == "0")) {
+        fetchContractDetails(CurApps.id);
         document.getElementById("interbtn").disabled = false;
     }
     else {
@@ -228,4 +231,26 @@ function b64toBlob(b64Data, contentType, sliceSize) {
 
     var blob = new Blob(byteArrays, { type: contentType });
     return blob;
+}
+
+function fetchContractDetails(id) {
+    $.ajax({
+        url: '../../backend/CandidateFollowup/FetchInterview.php',
+        type: 'GET',
+        data: {
+            id: id
+        },
+        success: function (response) {
+            var data = JSON.parse(response);
+            console.log(data); 
+            var useData  = data[0];
+            document.getElementById('interlink').innerText = useData.LocationLink || "-";
+            document.getElementById('interdate').innerText = useData.InterviewDate || "-";
+            document.getElementById('stadate').innerText = useData.StartTime || "-";
+            document.getElementById('endate').innerText = useData.EndTime || "-";
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('An error occurred: ' + textStatus + ' ' + errorThrown);
+        }
+    });
 }

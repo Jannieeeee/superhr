@@ -128,8 +128,8 @@ function fetchCandidates() {
             $('#candidates').html(html);
 
         },
-        error: function () {
-            console.log('There was an error.');
+        error: function (e) {
+            console.log('There was an error.' + JSON.stringify(e));
         }
     });
 }

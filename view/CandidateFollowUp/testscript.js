@@ -1,15 +1,15 @@
 var file1;
 var file2;
-document.getElementById('ansfile1').addEventListener('change', function() {
+document.getElementById('ansfile1').addEventListener('change', function () {
     var reader = new FileReader();
-    reader.onloadend = function() {
+    reader.onloadend = function () {
         file1 = reader.result;
     }
     reader.readAsDataURL(this.files[0]);
 });
-document.getElementById('ansfile2').addEventListener('change', function() {
+document.getElementById('ansfile2').addEventListener('change', function () {
     var reader = new FileReader();
-    reader.onloadend = function() {
+    reader.onloadend = function () {
         file2 = reader.result;
     }
     reader.readAsDataURL(this.files[0]);
@@ -39,10 +39,10 @@ function updateCandidateData(id, field, value) {
 function submitTest() {
     if (confirm("ยืนยันการส่งผลการทดสอบ")) {
         const data = {
-            'ansfile1': file1  || "-",
-            'ansfile2': file2 || "-" ,
-            'link1': document.getElementById('link1').value||"-",
-            'link2': document.getElementById('link2').value || "-" ,
+            'ansfile1': file1 || "-",
+            'ansfile2': file2 || "-",
+            'link1': document.getElementById('link1').value || "-",
+            'link2': document.getElementById('link2').value || "-",
             'followup_id': CurApps.id,
         };
 
@@ -69,9 +69,13 @@ function submitTest() {
     }
 }
 
-function submitInter(){
-    updateCandidateData(CurApps.id, 'isInter', '1')
+function submitInter() {
+    if (confirm("ยืนยันการส่งผลการสัมภาษณ์")) {
+        alert("ส่งผลการสัมภาษณ์เรียบร้อย");
+        updateCandidateData(CurApps.id, 'isInter', '1')
+    }
 }
+
 
 function updateStatus(userId, status) {
     $.ajax({
@@ -91,5 +95,4 @@ function updateStatus(userId, status) {
         }
     });
 }
-
 

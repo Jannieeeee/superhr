@@ -287,48 +287,48 @@ require_once '../../Component/Navbar.php';
                                     <div class="row mb-3">
                                         <div class="col-sm-6">
                                             <label for="inp" class="text-muted mb-2">Contract period</label>
-                                            <input type="text" name="con" class="form-control" placeholder="x Months/ x Years">
+                                            <input id= "contractp" type="text" name="con" class="form-control" placeholder="x Months/ x Years">
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="inp" class="text-muted mb-2">Contract type</label>
-                                            <input type="text" name="con" class="form-control" placeholder="ex.Full-time">
+                                            <input id= "contractt"  type="text" name="con" class="form-control" placeholder="ex.Full-time">
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <div class="col-sm-6">
                                             <label for="inp" class="text-muted mb-2">Work type</label>
-                                            <input type="text" name="con" class="form-control" placeholder="Hybrid">
+                                            <input id= "workt" type="text" name="con" class="form-control" placeholder="Hybrid">
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="inp" class="text-muted mb-2">Work place</label>
-                                            <input type="text" name="con" class="form-control">
+                                            <input id= "workp" type="text" name="con" class="form-control">
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <div class="col-sm-6">
                                             <label for="inp" class="text-muted mb-2">Salary</label>
-                                            <input type="text" name="con" class="form-control" placeholder="xx,xxx">
+                                            <input id= "csalary" type="text" name="con" class="form-control" placeholder="xx,xxx">
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="inp" class="text-muted mb-2">Transfer account</label>
-                                            <input type="text" name="con" class="form-control" placeholder="xx,xxx">
+                                            <input id= "tranfera" type="text" name="con" class="form-control" placeholder="xx,xxx">
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <div class="col-sm-6">
                                             <label for="inp" class="text-muted mb-2">Start date</label>
-                                            <input type="date" name="con" class="form-control">
+                                            <input id= "cstdate" type="date" name="con" class="form-control">
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="inp" class="text-muted mb-2">End date</label>
-                                            <input type="date" name="con" class="form-control">
+                                            <input id= "cend" type="date" name="con" class="form-control">
                                         </div>
                                     </div>
                                     <div class="d-grid gap-3 d-md-flex justify-content-md-end">
-                                        <a href="#pills-contract1" class="btn btn-primary" role="button" style="background-color: #444DDA;">save</a>
+                                        <a id ="hbtn" onclick="Hire()" href="#pills-contract1" class="btn btn-primary" role="button" style="background-color: #444DDA;">Hire</a>
                                     </div>
                                 </div>
                             </div>

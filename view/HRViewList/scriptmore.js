@@ -17,8 +17,8 @@ function ScheduleInterview() {
         success: function (response) {
             console.log(response);
             alert('Interview schedule has been added successfully');
-            updateStatus(currentID, 'interviewed');
-            location.reload();
+            // updateStatus(currentID, 'interviewed');
+            // location.reload();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alert('An error occurred: ' + textStatus + ' ' + errorThrown);
@@ -81,74 +81,88 @@ function ChangeStatusBtn() {
 
 }
 function ChangeStatus() {
+    document.getElementsByClassName("nv1")[0].style = "color: grey; pointer-events: none;";
+    document.getElementsByClassName("nv2")[0].style = "color: grey; pointer-events: none;";
+    document.getElementsByClassName("nv3")[0].style = "color: grey; pointer-events: none;";
+    document.getElementById("btndc").innerHTML = "Deline";
+    document.getElementById("btndc").style = "pointer-events: auto;";
+    document.getElementById("btn1").style = "pointer-events: auto;";
+    document.getElementById("hbtn").style = "background-color:grey;pointer-events: none;";
 
     if (selectCandidate.status == "new") {
         updateStatus(currentID, "pre_screen")
         selectCandidate.status = "pre_screen"
-        document.getElementsByClassName("nv1")[0].style = "color: grey; pointer-events: none;";
-        document.getElementsByClassName("nv2")[0].style = "color: grey; pointer-events: none;";
         location.reload();
 
     } else if (selectCandidate.status == "pre_screen") {
-        document.getElementById("btndc").innerHTML = "Deline";
-        document.getElementsByClassName("nv1")[0].style = "color: grey; pointer-events: none;";
-        document.getElementsByClassName("nv2")[0].style = "color: grey; pointer-events: none;";
-        document.getElementsByClassName("nv3")[0].style = "color: grey; pointer-events: none;";
         document.getElementById("btn1").innerHTML = "short_list";
 
     }
     else if (selectCandidate.status == "short_list") {
-        document.getElementById("btndc").innerHTML = "Deline";
-        document.getElementsByClassName("nv1")[0].style = "color: green; pointer-events: none;";
-        document.getElementsByClassName("nv2")[0].style = "color: grey; pointer-events: none;";
-        document.getElementsByClassName("nv3")[0].style = "color: grey; pointer-events: none;";
         document.getElementById("btn1").innerHTML = "Wait for test.";
 
     }
     else if (selectCandidate.status == "test") {
-        document.getElementById("btndc").innerHTML = "Deline";
-
         document.getElementsByClassName("nv1")[0].style = "color: green; pointer-events: auto;";
-        document.getElementsByClassName("nv2")[0].style = "color: grey; pointer-events: none;";
-        document.getElementsByClassName("nv3")[0].style = "color: grey; pointer-events: none;";
-
         FetchTestData(currentID);
         FetchTestC(1);
         FetchInterC(1);
         document.getElementById("btn1").innerHTML = "Interview";
 
     } else if (selectCandidate.status == "scheduled_interview") {
-        document.getElementById("btndc").innerHTML = "Deline";
-        document.getElementsByClassName("nv1")[0].style = "color: grey; pointer-events: none;";
         document.getElementsByClassName("nv2")[0].style = "color: green; pointer-events: auto;";
-        document.getElementsByClassName("nv3")[0].style = "color: grey; pointer-events: none;";
-
         document.getElementById("btn1").innerHTML = "Wait Interview.";
 
     } else if (selectCandidate.status == "interviewed") {
-        document.getElementById("btndc").innerHTML = "Deline";
         document.getElementById("btn1").innerHTML = "Pass";
-        document.getElementsByClassName("nv1")[0].style = "color: grey; pointer-events: none;";
-        document.getElementsByClassName("nv2")[0].style = "color: grey; pointer-events: none;";
-        document.getElementsByClassName("nv3")[0].style = "color: grey; pointer-events: none;";
 
     } else if (selectCandidate.status == "pass") {
-        document.getElementById("btndc").innerHTML = "Deline";
-
         document.getElementById("btn1").innerHTML = "passed";
-        document.getElementsByClassName("nv1")[0].style = "color: grey; pointer-events: none;";
-        document.getElementsByClassName("nv2")[0].style = "color: grey; pointer-events: none;";
         document.getElementsByClassName("nv3")[0].style = "color: green; pointer-events: auto;";
+        document.getElementById("hbtn").style = "background-color:green;pointer-events: auto;";
+
     }
     else if (selectCandidate.status == "fail") {
         document.getElementById("btn1").innerHTML = "candidate failed";
         document.getElementById("btndc").innerHTML = "candidate failed";
 
-        document.getElementsByClassName("nv1")[0].style = "color: grey; pointer-events: none;";
-        document.getElementsByClassName("nv2")[0].style = "color: grey; pointer-events: none;";
-        document.getElementsByClassName("nv3")[0].style = "color: grey; pointer-events: none;";
 
+    } else if (selectCandidate.status == "hire") {
+        document.getElementById("btndc").style = "pointer-events: none;";
+        document.getElementById("btn1").style = "pointer-events: none;";
+        document.getElementById("btn1").innerHTML = "Hired";
+        document.getElementById("btndc").innerHTML = "Hired";
     }
 
 }
 
+
+
+
+function Hire() {
+
+    $.ajax({
+        url: '../../backend/HrviewList/SaveContractDetail.php',
+        type: 'POST',
+        data: {
+            ContractPeriod: document.getElementById("contractp").value,
+            WorkType: document.getElementById("contractt").value,
+            ContractType: document.getElementById("workt").value,
+            WorkPlace: document.getElementById("workp").value,
+            TransferAccount: document.getElementById("tranfera").value,
+            Salary: document.getElementById("csalary").value,
+            StartDate: document.getElementById("cstdate").value,
+            EndDate: document.getElementById("cend").value,
+            followup_id: currentID
+        },
+        success: function (response) {
+            console.log(response);
+            alert('Hire has been successfully');
+            updateStatus(currentID, 'hire');
+            location.reload();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('An error occurred: ' + textStatus + ' ' + errorThrown);
+        }
+    });
+}

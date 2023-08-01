@@ -32,7 +32,8 @@ CREATE TABLE candidate_followup (
 );
 ALTER TABLE candidate_followup
 ADD COLUMN isTest TINYINT NOT NULL DEFAULT 0;
-
+ALTER TABLE candidate_followup
+ADD COLUMN isInter TINYINT NOT NULL DEFAULT 0;
 
 ALTER TABLE candidate_followup 
 MODIFY COLUMN followup_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
@@ -112,7 +113,20 @@ CREATE TABLE testjob (
 ALTER TABLE testjob 
 MODIFY COLUMN testdate TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 
-
+DROP TABLE IF EXISTS ContractDetail;
+CREATE TABLE ContractDetail (
+    ContractId INT PRIMARY KEY AUTO_INCREMENT,
+    ContractPeriod TEXT,
+    WorkType VARCHAR(100),
+	WorkPlace VARCHAR(100),
+    ContractType VARCHAR(100),
+    TransferAccount VARCHAR(100),
+    Salary VARCHAR(100),
+    StartDate DATE,
+    EndDate DATE,
+    	followup_id INT,
+	FOREIGN KEY (followup_id) REFERENCES candidate_followup(id)
+);
 
 
 
@@ -261,7 +275,7 @@ SELECT cf.id, cf.user_id, cf.status, cf.followup_date, cf.typeapp, cf.notes, cf.
        c.contact_person, c.contact_phone_number, 
        e.university, e.faculty, e.major, e.year, e.gpa, 
        d.transcript, d.resume_data, d.house_data, d.idcard_data, d.photo_data, d.certi_data, d.other,
-       s.salary
+       s.salary, cf.isInter
 FROM candidate_followup cf 
 LEFT JOIN addresses a ON cf.id = a.followup_id
 LEFT JOIN positions p ON cf.id = p.followup_id

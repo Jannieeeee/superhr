@@ -49,8 +49,8 @@
         <div class="col-8">
             <div class="shadow-sm rounded p-3">
                 <h6 class="text-end">Process status: <span class="bold text-primary" id="status">New apply</span></h6>
-                <div class="d-flex justify-content-end waittest">
-                    <button id="testbtn" disabled type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Test</button>
+                <div class="d-flex justify-content-end waittest gap-3">
+                    <button id="testbtn" disabled type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Test</button>
                     <button id="interbtn" disabled type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2" data-bs-whatever="@getbootstrap">Interview</button>
                 </div>
                 <h5 class="text-start">Application Information</h5>
@@ -186,12 +186,28 @@
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Skill Test</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Interview</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-   
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <h4 class="text-muted text-center" id="interdate"></h4>
+                            </div>
+                            <div class="col-12 text-center text-muted mb-3">
+                                <span id="stadate">-</span> To <span id="endate">-</span>
+                            </div>
+                            <div class="col-12 text-center">
+                                <p>Interview Links : </p>
+                                <a class="link link-primary" id="interlink" href="#">
+                                    <button class="btn btn-primary">-</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" onclick="submitInter()">End Interview</button>
