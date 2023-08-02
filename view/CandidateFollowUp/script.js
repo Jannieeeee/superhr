@@ -112,7 +112,7 @@ function onSelect(index) {
 
 
 function cancelApplication() {
-    var cancelReason = $("#cancelReason").val();
+    var cancelReason = $("#cancel_reason").val();
 
     $.ajax({
         url: '../../backend/CandidateFollowup/CancelApplication.php',

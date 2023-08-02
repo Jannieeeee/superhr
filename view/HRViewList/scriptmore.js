@@ -17,8 +17,8 @@ function ScheduleInterview() {
         success: function (response) {
             console.log(response);
             alert('Interview schedule has been added successfully');
-            // updateStatus(currentID, 'interviewed');
-            // location.reload();
+            updateStatus(currentID, 'interviewed');
+            location.reload
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alert('An error occurred: ' + textStatus + ' ' + errorThrown);

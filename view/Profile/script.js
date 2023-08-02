@@ -7,6 +7,7 @@ async  function setData() {
     console.log(currentDataC);
     document.getElementById("thfullname").value = currentData.full_name_th || "";
     document.getElementById("enfullname").value = currentData.full_name_eng || "";
+    document.getElementById("ttname").innerHTML = (currentData.full_name_eng + " / " + currentData.full_name_th  )|| "";
     document.getElementById("gender").value = currentData.gender || "";
     document.getElementById("bod").value = currentData.date_of_birth || "";
     let dob = new Date(currentData.date_of_birth);
