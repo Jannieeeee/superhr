@@ -45,8 +45,12 @@ function validateTab1() {
 
     fields1.forEach(field => {
         if ((field != salaries) && !field.value || (field === typeSelection && field.value === 'Choose...') || (field === pos1Selection && field.value === 'Choose...') || (field === pos2Selection && field.value === 'Choose...')) {
-            field.classList.add('is-invalid');
-            isValid = false;
+            if(field === Position2 || field === Reason){
+            }else{
+
+                field.classList.add('is-invalid');
+                isValid = false;
+            }
         } else {
             field.classList.add('is-valid');
         }

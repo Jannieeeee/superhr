@@ -37,7 +37,7 @@ if (!empty($positions)) {
 
 if (!empty($statuses)) {
     $placeholders = implode(',', array_fill(0, count($statuses), '?'));
-    $sql .= " AND status IN ($placeholders)";
+    $sql .= " OR status IN ($placeholders)";
     $params = array_merge($params, $statuses);
     $types .= str_repeat('s', count($statuses));
     $debugParams = array_merge($debugParams, $statuses);

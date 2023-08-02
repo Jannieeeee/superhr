@@ -132,8 +132,33 @@ function ChangeStatus() {
         document.getElementById("btn1").style = "pointer-events: none;";
         document.getElementById("btn1").innerHTML = "Hired";
         document.getElementById("btndc").innerHTML = "Hired";
+        document.getElementsByClassName("nv3")[0].style = "color: green; pointer-events: auto;";
+        FetchHireData();
+
     }
 
+}
+
+async function FetchHireData() {
+    try {
+        let data = await $.ajax({
+            url: '../../backend/HrviewList/Fetchhire.php',
+            type: 'POST',
+            dataType: 'json',
+            data: { id: currentID }
+        });
+        console.log(data);
+        document.getElementById("contractp").value = data.ContractPeriod;
+            document.getElementById("contractt").value = data.WorkType;
+            document.getElementById("workt").value = data.ContractType;
+            document.getElementById("workp").value = data.WorkPlace;
+            document.getElementById("tranfera").value = data.TransferAccount;
+            document.getElementById("csalary").value = data.Salary;
+            document.getElementById("cstdate").value = data.StartDate;
+            document.getElementById("cend").value = data.EndDate
+    } catch (error) {
+        console.log('There was an error.', error);
+    }
 }
 
 

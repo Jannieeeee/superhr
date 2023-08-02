@@ -21,7 +21,7 @@ $StartDate = $_POST['StartDate'];
 $EndDate = $_POST['EndDate'];
 $followup_id = $_POST['followup_id'];
 
-$sql = "INSERT INTO contracts (ContractPeriod, WorkType, ContractType, WorkPlace, TransferAccount, Salary, StartDate, EndDate, followup_id)
+$sql = "INSERT INTO ContractDetail (ContractPeriod, WorkType, ContractType, WorkPlace, TransferAccount, Salary, StartDate, EndDate, followup_id)
 VALUES ('$ContractPeriod', '$WorkType', '$ContractType', '$WorkPlace', '$TransferAccount', '$Salary', '$StartDate', '$EndDate', '$followup_id')";
 
 if ($conn->query($sql) === TRUE) {

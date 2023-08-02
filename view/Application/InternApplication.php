@@ -149,7 +149,7 @@
                     Phone Number
                 </div>
                 <div class="col-9 mx-auto">
-                    <input type="text" id="contacttel" class="form-control fieldinput"></input>
+                    <input type="number" id="contacttel" class="form-control fieldinput"></input>
                 </div>
             </div>
             <div class="d-flex justify-content-end">

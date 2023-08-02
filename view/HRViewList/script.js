@@ -30,7 +30,7 @@ function addStatusChoice() {
         { show: "Scheduled interview", value: "scheduled_interview" },
         { show: "Interview", value: "interviewed" },
         { show: "Pass", value: "pass" },
-        { show: "Fall", value: "fail" },
+        { show: "Fail", value: "fail" },
         { show: "Hire", value: "hire" },
         { show: "Hold", value: "hold" },
     ]
@@ -83,6 +83,7 @@ function fetchCandidates() {
     let fullNameTh = $('#searchName').val();
     let fullNameEn = $('#searchName').val();
 
+    console.log(statuses);
     $.ajax({
         url: '../../backend/HrviewList/fetchCandidates.php',
         type: 'POST',
@@ -191,7 +192,7 @@ function FetchFulldata(id) {
     $('#bd').text(selectCandidate.date_of_birth);
     $('#cmail').text(selectCandidate.email);
     $('#facu').text(selectCandidate.faculty);
-    $('#major').text(selectCandidate.major);
+    $('#maj').text(selectCandidate.major);
     $('#gpa').text(selectCandidate.gpa);
     $('#uni').text(selectCandidate.university);
     $('#followupDate').text(selectCandidate.followup_date);

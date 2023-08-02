@@ -30,8 +30,12 @@ select * from  candidate_followup;
 
 SET SQL_SAFE_UPDATES = 0;
 UPDATE candidate_followup
-SET status = 'scheduled_interview'
-WHERE status  = "interviewed";
+SET status = 'pass'
+WHERE status  = "hire";
+
+UPDATE users
+SET role = 'admin'
+WHERE id  = "1";
 
 SELECT * FROM ScheduleInterview;
 
@@ -42,5 +46,5 @@ select * from testjob tj left join followup_test_questions ft on ft.followup_id 
 
 
 SELECT * FROM ScheduleInterview WHERE followup_id = 2;
-SELECT * FROM ScheduleInterview;
+SELECT * FROM ContractDetail;
 
